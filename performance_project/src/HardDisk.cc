@@ -26,10 +26,10 @@ void HardDisk::initialize(){
     // add code for managing a queue
 }
 
-void Cpu::handleMessage(cMessage * msg){
+void HardDisk::handleMessage(cMessage * msg){
 
 }
 
-void Cpu::finish(){
+void HardDisk::finish(){
 
 }
