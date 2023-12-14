@@ -21,7 +21,7 @@ package performance_project;
 simple Cpu
 {
     parameters:
-        double p1 = default(0.3);
+        double p1 = default(0.3); // shouldn't they be in the compound module? It doesn't change the behaviour of the code
         double p2 = default(0.3);
         double procTime @unit(s) = exponential(1s);
         	// non mi torna procTime, come decido quanto vale il rate (in questo caso 1s)
@@ -29,6 +29,7 @@ simple Cpu
         	// .cc prendo il parametro da qui e ci calcolo sopra l'esponenziale?
         	// visto che poi va cambiato il rate per fare le statistiche e si fa dal .ini
 
+			// 14/12/2023: I prefer using here just the mean value and not the exponential
 		// aggiungere le statistic
 
     gates:
