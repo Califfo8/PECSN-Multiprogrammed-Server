@@ -13,46 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-<<<<<<< HEAD:multiprogrammed_server/src/HardDisk.ned
 package multiprogrammed_server;
-=======
-#include "WebServer.h"
-
-Define_Module(WebServer);
-
-void WebServer::initialize(){
-
-    qs_queue_  = new cQueue();
-    working_ = false;
-    qs_rate_ = par("web_server_rate");
-
-}
-
-void WebServer::handleMessage(cMessage * msg){
-    if(!msg->isSelfMessage()){
-        if(!working_){
-            scheduleAt(simTime() + exponential(1/qs_rate_),msg);
-            working_ = true;
-        }
-        else {
-            qs_queue_->insert(msg);
-        }
-    }
-    else {
-        send(msg,"QS_to_CPU");
-        if(qs_queue_->isEmpty()){
-            working_ = false;
-        }
-        else {
-            cMessage *self = check_and_cast <cMessage* > (qs_queue_->pop());
-            scheduleAt(simTime()+ exponential(1/qs_rate_), self);
-            working_ = true;
-        }
-    }
-}
-
-void WebServer::finish(){
->>>>>>> refs/remotes/origin/main:performance_project/src/WebServer.cc
 
 //
 // TODO auto-generated type

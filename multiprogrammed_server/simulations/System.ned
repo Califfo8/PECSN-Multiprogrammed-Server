@@ -27,8 +27,9 @@ network System
         int N = default(1);
         @display("bgb=740,406");
     submodules:
-        client[N]: Client {
+        client: Client {
             @display("p=540,87");
+            numClients = N;
         }
         server: Server {
             N = N;
@@ -42,8 +43,6 @@ network System
         webServer.out --> server.webServerIN;
         server.webServerOUT --> webServer.in;
 
-        for i=0..N-1 {
-            client[i].out --> server.clientIN[i];
-            server.clientOUT[i] --> client[i].in;
-        }
+        client.out --> server.clientIN;
+        server.clientOUT --> client.in;
 }

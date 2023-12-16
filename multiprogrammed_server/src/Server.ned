@@ -24,8 +24,8 @@ module Server
 		int N = default(1);
     gates:
         // o cos� o si usa un vettore di clientIN e clientOUT
-        input clientIN[N];
-        output clientOUT[N];
+        input clientIN;
+        output clientOUT;
 
         input webServerIN;
         output webServerOUT;
@@ -47,8 +47,6 @@ module Server
         cpu.webServerOUT --> webServerOUT;
         webServerIN --> cpu.webServerIN;
         
-        for i = 0..N-1 {
-        	cpu.clientOUT[i] --> clientOUT[i];
-        	clientIN[i] --> cpu.clientIN[i];
-        }
+        cpu.clientOUT --> clientOUT;
+        clientIN --> cpu.clientIN;
 }
