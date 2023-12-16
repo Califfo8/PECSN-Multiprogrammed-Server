@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package performance_project;
+package simulator;
 
 //
 // TODO auto-generated type
@@ -21,10 +21,10 @@ package performance_project;
 simple Client
 {
     parameters:
-    	// int N = default(1);
+    	int numClients = default(1);
     	// quindi si fa che questo simple Module rappresenta N client
     	// o si usano N client separati ( da come parlato sabato sera la prima soluzione)
-    	// nel caso i messaggi devono comprendere che client è?
+    	// nel caso i messaggi devono comprendere che client ï¿½?
     gates: 
         input in;
         output out;

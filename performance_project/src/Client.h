@@ -22,7 +22,8 @@ using namespace omnetpp;
 class Client : public cSimpleModule {
     // NOTE: "_" in name stands of properties stands for private, as seen during lectures
     private:
-        double procTime_;
+        // double procTime_;
+        int numClients_;
 
     protected:
         virtual void initialize();

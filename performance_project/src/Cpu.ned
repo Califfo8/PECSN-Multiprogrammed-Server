@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package performance_project;
+package simulator;
 
 //
 // TODO auto-generated type
@@ -21,22 +21,22 @@ package performance_project;
 simple Cpu
 {
     parameters:
-        int N = default(1); // numero dei client
         double p1 = default(0.3); // shouldn't they be in the compound module? It doesn't change the behaviour of the code
         double p2 = default(0.3);
-        double procTime @unit(s) = exponential(1s);
+        //double procTime @unit(s) = exponential(1s);
         	// non mi torna procTime, come decido quanto vale il rate (in questo caso 1s)
-        	// devo mettere direttamente che il fattore è il rate e quindi poi nel codice
+        	// devo mettere direttamente che il fattore ï¿½ il rate e quindi poi nel codice
         	// .cc prendo il parametro da qui e ci calcolo sopra l'esponenziale?
         	// visto che poi va cambiato il rate per fare le statistiche e si fa dal .ini
 
 			// 14/12/2023: I prefer using here just the mean value and not the exponential
+        double rate = default(1);
 		// aggiungere le statistic
 
     gates:
-        // o così o si usa un vettore di clientIN e clientOUT
-        input clientIN[N];
-        output clientOUT[N];
+        // o cosÃ¬ o si usa un vettore di clientIN e clientOUT
+        input clientIN;
+        output clientOUT;
 
         input webServerIN;
         output webServerOUT;

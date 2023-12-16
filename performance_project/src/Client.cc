@@ -18,15 +18,25 @@
 Define_Module(Client);
 
 void Client::initialize(){
-    procTime_ = par("procTime");
-
     // add signals if needed
 
-    // add code for managing a queue
+    numClients_ = par("numClients");
+
+    /*
+    cMessage * msg = new cMessage("CLI_to_CPU");
+    send(msg, "out");
+    */
+
+    for( int i = 0 ; i < numClients_ ; i++ ){
+        cMessage * msg = new cMessage("CLI_to_CPU");
+        send(msg,"out");
+    }
+
 }
 
 void Client::handleMessage(cMessage * msg){
-
+    cMessage * msg2 = new cMessage("CLI_to_CPU");
+    send(msg2,"out"); 
 }
 
 void Client::finish(){

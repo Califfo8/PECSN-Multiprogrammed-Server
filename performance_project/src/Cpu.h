@@ -26,8 +26,11 @@ class Cpu : public cSimpleModule {
         double p1_;
         double p2_;
         int counter_;
-        double procTime_;
-
+        double CPUmeanRate_;
+        cQueue * queue_;
+        bool working_;
+        //char * msg_;
+        cMessage * msg_;
     protected:
         virtual void initialize();
         virtual void handleMessage(cMessage *msg);
