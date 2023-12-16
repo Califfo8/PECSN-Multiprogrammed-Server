@@ -32,7 +32,6 @@ network System
             numClients = N;
         }
         server: Server {
-            N = N;
             @display("p=316,87;is=vl");
         }
         webServer: WebServer {
