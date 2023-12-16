@@ -13,17 +13,23 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package performance_project;
+#ifndef WEBSERVER_H_
+#define WEBSERVER_H_
 
-//
-// TODO auto-generated type
-//
-simple WebServer
-{
-    parameters:
-        double web_server_rate = default(1); // stesso discorso fatti in cpu.ned
-        // servono statistic qui?
-   	gates:
-   	    input in;
-   	    output out;
-}
+#include <omnetpp.h>
+using namespace omnetpp;
+
+class WebServer : public cSimpleModule {
+    // NOTE: "_" in name stands of properties stands for private, as seen during lectures
+    private:
+        double qs_rate_;
+        cQueue * qs_queue_;
+        bool working_;
+
+    protected:
+        virtual void initialize();
+        virtual void handleMessage(cMessage *msg);
+        virtual void finish();
+};
+
+#endif /* WEBSERVER_H_ */
