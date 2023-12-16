@@ -21,7 +21,7 @@ package multiprogrammed_server;
 module Server
 {
     parameters:
-		int N = default(1);
+		
     gates:
         // o cos� o si usa un vettore di clientIN e clientOUT
         input clientIN;
@@ -35,9 +35,7 @@ module Server
 
     submodules:
         hd: HardDisk;
-        cpu: Cpu {
-        	N = N; // o si fa lato .ini o da qui direttamente assegno parametro del server al parametro della cpu
-        };
+        cpu: Cpu;
     connections:
         // dove vanno messi i delay
 
