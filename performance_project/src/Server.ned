@@ -21,11 +21,11 @@ package performance_project;
 module Server
 {
     parameters:
-
+		int N = default(1);
     gates:
         // o così o si usa un vettore di clientIN e clientOUT
-        input clientIN;
-        output clientOUT;
+        input clientIN[N];
+        output clientOUT[N];
 
         input webServerIN;
         output webServerOUT;
@@ -35,21 +35,20 @@ module Server
 
     submodules:
         hd: HardDisk;
-        cpu: Cpu;
+        cpu: Cpu {
+        	N = N; // o si fa lato .ini o da qui direttamente assegno parametro del server al parametro della cpu
+        };
     connections:
         // dove vanno messi i delay
 
         cpu.hdOUT --> hd.in;
         hd.out --> cpu.hdIN;
 
-        cpu.clientOUT --> clientOUT;
-        clientIN --> cpu.clientIN;
-
         cpu.webServerOUT --> webServerOUT;
         webServerIN --> cpu.webServerIN;
-
-
-
-
-
+        
+        for i = 0..N-1 {
+        	cpu.clientOUT[i] --> clientOUT[i];
+        	clientIN[i] --> cpu.clientIN[i];
+        }
 }

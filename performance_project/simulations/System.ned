@@ -24,20 +24,26 @@ import performance_project.WebServer;
 network System
 {
     parameters:
-        
+        int N = default(1);
+        @display("bgb=740,406");
     submodules:
-    	client : Client;
-    	server : Server;
-    	webServer: WebServer;
+        client[N]: Client {
+            @display("p=540,87");
+        }
+        server: Server {
+            N = N;
+            @display("p=316,87;is=vl");
+        }
+        webServer: WebServer {
+            @display("p=213,249");
+        }
     connections:
-        
-        client.out --> server.clientIN;
-        server.clientOUT --> client.in;
-        
+
         webServer.out --> server.webServerIN;
         server.webServerOUT --> webServer.in;
-        
-        
-        
-        
+
+        for i=0..N-1 {
+            client[i].out --> server.clientIN[i];
+            server.clientOUT[i] --> client[i].in;
+        }
 }

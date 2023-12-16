@@ -21,7 +21,7 @@ package performance_project;
 simple Client
 {
     parameters:
-    	int N = default(1);
+    	// int N = default(1);
     	// quindi si fa che questo simple Module rappresenta N client
     	// o si usano N client separati ( da come parlato sabato sera la prima soluzione)
     	// nel caso i messaggi devono comprendere che client è?
