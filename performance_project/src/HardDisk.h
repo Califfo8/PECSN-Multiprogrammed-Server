@@ -22,7 +22,12 @@ using namespace omnetpp;
 class HardDisk : public cSimpleModule {
     // NOTE: "_" in name stands of properties stands for private, as seen during lectures
     private:
-        double procTime_;
+        double rate_;
+        cMessage* workOnMsg;
+        bool working_;
+        cQueue * hd_queue_;
+        cMessage* finish_comp_;
+        void elaborate_msg_(cMessage * msg);
 
     protected:
         virtual void initialize();

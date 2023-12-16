@@ -21,6 +21,7 @@ package performance_project;
 simple Cpu
 {
     parameters:
+        int N = default(1); // numero dei client
         double p1 = default(0.3); // shouldn't they be in the compound module? It doesn't change the behaviour of the code
         double p2 = default(0.3);
         double procTime @unit(s) = exponential(1s);
@@ -34,8 +35,8 @@ simple Cpu
 
     gates:
         // o così o si usa un vettore di clientIN e clientOUT
-        input clientIN;
-        output clientOUT;
+        input clientIN[N];
+        output clientOUT[N];
 
         input webServerIN;
         output webServerOUT;
