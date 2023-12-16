@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<section name="Workbench">
-	<section name="ImportWizard">
-	</section>
-	<section name="TemplateBasedWizard">
-		<item key="nedfile.template" value="bundleentry://445.fwk1729630592/templates/emptynedfile/"/>
-	</section>
-</section>

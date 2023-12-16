@@ -1,9 +1,0 @@
-18:50:40 **** Incremental Build of configuration debug for project performance_project ****
-make MODE=debug all 
-cd src && /usr/bin/make
-make[1]: Entering directory '/c/PerformanceEvaluation/omnetpp-6.0.1-windows-x86_64/omnetpp-6.0.1/samples/PECSN-Project/performance_project/src'
-make[1]: Nothing to be done for 'all'.
-make[1]: Leaving directory '/c/PerformanceEvaluation/omnetpp-6.0.1-windows-x86_64/omnetpp-6.0.1/samples/PECSN-Project/performance_project/src'
-
-18:50:41 Build Finished. 0 errors, 0 warnings. (took 579ms)
-

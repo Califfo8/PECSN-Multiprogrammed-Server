@@ -1,5 +1,0 @@
-[General]
-network = System
-
-[Config 1]
-sim-time-limit = 10s
