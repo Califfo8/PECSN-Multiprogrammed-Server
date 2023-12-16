@@ -1,3 +1,3 @@
-package performance_project;
+package multiprogrammed_server;
 
 @license(LGPL);

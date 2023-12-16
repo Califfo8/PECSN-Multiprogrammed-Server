@@ -13,11 +13,11 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package performance_project.simulations;
+package multiprogrammed_server.simulations;
 
-import performance_project.Client;
-import performance_project.Server;
-import performance_project.WebServer;
+import multiprogrammed_server.Client;
+import multiprogrammed_server.Server;
+import multiprogrammed_server.WebServer;
 //
 // TODO auto-generated type
 //

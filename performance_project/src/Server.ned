@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package performance_project;
+package multiprogrammed_server;
 
 //
 // TODO auto-generated type
@@ -23,7 +23,7 @@ module Server
     parameters:
 		int N = default(1);
     gates:
-        // o così o si usa un vettore di clientIN e clientOUT
+        // o cosï¿½ o si usa un vettore di clientIN e clientOUT
         input clientIN[N];
         output clientOUT[N];
 

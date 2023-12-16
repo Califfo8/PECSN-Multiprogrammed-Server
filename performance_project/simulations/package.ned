@@ -1,3 +1,3 @@
-package performance_project.simulations;
+package multiprogrammed_server.simulations;
 
 @license(LGPL);

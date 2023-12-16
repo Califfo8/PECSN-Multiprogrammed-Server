@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package performance_project;
+package multiprogrammed_server;
 
 //
 // TODO auto-generated type
@@ -21,7 +21,8 @@ package performance_project;
 simple HardDisk
 {
     parameters:
-        double procTime @unit(s) = exponential(1s); // stesso discorso fatti in cpu.ned
+        double rateProcessing;
+        
         
         // servono statistic qui?
     gates:
