@@ -21,7 +21,7 @@ package multiprogrammed_server;
 simple WebServer
 {
     parameters:
-        double procTime @unit(s) = exponential(1s); // stesso discorso fatti in cpu.ned
+        double web_server_rate @unit(s) = exponential(1s); // stesso discorso fatti in cpu.ned
         // servono statistic qui?
    	gates:
    	    input in;

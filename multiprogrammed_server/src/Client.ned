@@ -15,6 +15,7 @@
 
 package multiprogrammed_server;
 
+<<<<<<< HEAD:multiprogrammed_server/src/Client.ned
 //
 // TODO auto-generated type
 //
@@ -29,3 +30,22 @@ simple Client
         input in;
         output out;
 }
+=======
+#include <omnetpp.h>
+using namespace omnetpp;
+
+class WebServer : public cSimpleModule {
+    // NOTE: "_" in name stands of properties stands for private, as seen during lectures
+    private:
+        double qs_rate_;
+        cQueue * qs_queue_;
+        bool working_;
+
+    protected:
+        virtual void initialize();
+        virtual void handleMessage(cMessage *msg);
+        virtual void finish();
+};
+
+#endif /* WEBSERVER_H_ */
+>>>>>>> refs/remotes/origin/main:performance_project/src/WebServer.h
