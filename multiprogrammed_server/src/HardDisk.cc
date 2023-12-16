@@ -23,17 +23,17 @@ void HardDisk::initialize(){
     // add signals if needed
 
     // add code for managing a queue
-    cQueue * hd_queue_ = new cQueue();
+    hd_queue_ = new cQueue();
 }
 void HardDisk::elaborate_msg_(cMessage * msg)
 {
     //Se non sto elaborando alcun messaggio, quindi lo elaboro
     if(!working_)
     {
-        finish_comp_ = new cMessage("Finish_Computation");
-        scheduleAt(simTime() + exponential(1/rate_), finish_comp_);
+        msg->setName("Finish elaboration");
+        simtime_t procTime = exponential( 1 / rate_);
+        scheduleAt(simTime() + procTime, msg);
         working_ = true;
-        workOnMsg = msg;
     }else{
      //Altrimenti ho già un elaborazione in corso, e il messaggio si accoda
         hd_queue_->insert(msg);
@@ -41,24 +41,27 @@ void HardDisk::elaborate_msg_(cMessage * msg)
 
 }
 void HardDisk::handleMessage(cMessage * msg){
-    //Il messaggio è della CPU
-    if( strcmp(msg->getName(),"CPU_to_HD") == 0)
-    {
-        elaborate_msg_(msg);
-    } // Il messaggio è di fine elaborazione
-    else if(msg->isSelfMessage())
-    {
-    //Invio il messaggio di risposta
-        workOnMsg->setName("HD_to_CPU");
-        send(workOnMsg, "out");
+    // Il messaggio è di fine elaborazione
+    if(msg->isSelfMessage())
+    { 
+        //Invio il messaggio di risposta
+        msg->setName("HD_to_CPU");
+        send(msg, "out");
         working_ = false;
-        //Se la coda non è vuota prendo un altro messaggio e riparto
+
+        
+        //Se la coda è piena prendo un altro messaggio e riparto
         if(!hd_queue_->isEmpty())
         {
             msg = check_and_cast<cMessage*>( hd_queue_->pop() );
             elaborate_msg_(msg);
         }
+        
     }
+    else//Il messaggio è della CPU
+    {
+        elaborate_msg_(msg);
+    } 
 
 
 }

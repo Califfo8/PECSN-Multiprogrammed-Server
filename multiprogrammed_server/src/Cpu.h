@@ -31,6 +31,7 @@ class Cpu : public cSimpleModule {
         bool working_;
         //char * msg_;
         cMessage * msg_;
+        void elaborate_msg_(cMessage * msg);
     protected:
         virtual void initialize();
         virtual void handleMessage(cMessage *msg);

@@ -36,7 +36,7 @@ void WebServer::handleMessage(cMessage * msg){
         }
     }
     else {
-        send(msg,"QS_to_CPU");
+        send(msg,"out");
         if(qs_queue_->isEmpty()){
             working_ = false;
         }

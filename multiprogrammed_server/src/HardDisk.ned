@@ -21,7 +21,7 @@ package multiprogrammed_server;
 simple HardDisk
 {
     parameters:
-        double rateProcessing;
+        double rateProcessing = default(1);
         
         
         // servono statistic qui?

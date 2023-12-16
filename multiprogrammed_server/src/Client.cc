@@ -35,6 +35,7 @@ void Client::initialize(){
 }
 
 void Client::handleMessage(cMessage * msg){
+    delete msg;
     cMessage * msg2 = new cMessage("CLI_to_CPU");
     send(msg2,"out"); 
 }

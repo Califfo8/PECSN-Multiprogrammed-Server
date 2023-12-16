@@ -24,12 +24,10 @@ import multiprogrammed_server.WebServer;
 network System
 {
     parameters:
-        int N = default(1);
         @display("bgb=740,406");
     submodules:
         client: Client {
             @display("p=540,87");
-            numClients = N;
         }
         server: Server {
             @display("p=316,87;is=vl");

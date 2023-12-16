@@ -29,6 +29,30 @@ void Cpu::initialize(){
     // add code for managing a queue
 }
 
+void Cpu::elaborate_msg_(cMessage * msg)
+{
+   double prob = uniform(0,1);
+   
+   if ( prob <= p1_ ){
+        msg->setName("END_T");
+        send(msg,"clientOUT");
+   }else if ( prob > p1_ && prob <= p1_ + p2_ ){
+        msg->setName("CPU_to_HD");
+        send(msg,"hdOUT");
+   }else{
+        msg->setName("CPU_to_QS");
+        send(msg,"webServerOUT");
+   }
+
+   if ( queue_->isEmpty() ){
+       working_ = false;
+   }else{
+       cMessage *msg2 = check_and_cast<cMessage*>( queue_->pop() );
+       simtime_t procTime = exponential( 1 / CPUmeanRate_ );
+       scheduleAt( simTime() + procTime , msg2 );
+   }
+}
+
 void Cpu::handleMessage(cMessage * msg){
     // arrivo messaggio
         // self_message 
@@ -50,26 +74,9 @@ void Cpu::handleMessage(cMessage * msg){
                 // lo mando subito a lavorare (schedule at)
 
     if ( msg->isSelfMessage() ){
-        int prob = uniform(0,1);
-
-        if ( prob <= p1_ ){ 
-            //cMessage * msg = new cMessage("CPU_to_CLIENT");
-            send(msg,"clientOUT");
-        }else if ( prob > p1_ && prob <= p1_ + p2_ ){
-            send(msg,"hdOUT");
-        }else{
-            send(msg,"webServerOUT");
-        }
-
-        if ( queue_->isEmpty() ){
-            working_ = false;
-        }else{
-            cMessage *msg2 = check_and_cast<cMessage*>( queue_->pop() );
-            simtime_t procTime = exponential( 1 / CPUmeanRate_ );
-            scheduleAt( simTime() + procTime , msg2 );
-        }
-
+        elaborate_msg_(msg);
     }else{
+        
         if ( working_ ){
             queue_->insert(msg);
         }else{
@@ -77,7 +84,7 @@ void Cpu::handleMessage(cMessage * msg){
 
             //strcpy(msg,msg_); // mi salvo il messaggio che mi hanno mandato non so se è utile
             //strcpy(msg->getName(), msg_); 
-            msg_ = msg->dup();
+            //msg_ = msg->dup();
 
             cMessage * msg2 = new cMessage("job_served");
             simtime_t procTime = exponential( 1 / CPUmeanRate_ );
