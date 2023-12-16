@@ -22,7 +22,9 @@ using namespace omnetpp;
 class WebServer : public cSimpleModule {
     // NOTE: "_" in name stands of properties stands for private, as seen during lectures
     private:
-        double procTime_;
+        double qs_rate_;
+        cQueue * qs_queue_;
+        bool working_;
 
     protected:
         virtual void initialize();
