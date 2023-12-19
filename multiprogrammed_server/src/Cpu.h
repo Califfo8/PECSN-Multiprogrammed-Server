@@ -25,13 +25,17 @@ class Cpu : public cSimpleModule {
     private:
         double p1_;
         double p2_;
-        int counter_;
+        int requestCounter_;
         double CPUmeanRate_;
         cQueue * queue_;
         bool working_;
         //char * msg_;
         cMessage * msg_;
         void elaborate_msg_(cMessage * msg);
+        void elaborate_throughput_stat_(cMessage * msg);
+        // statistic
+        simtime_t unitOfTime_;
+        simesignal_t requestCounterSignal_;
     protected:
         virtual void initialize();
         virtual void handleMessage(cMessage *msg);

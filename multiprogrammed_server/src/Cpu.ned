@@ -31,7 +31,13 @@ simple Cpu
 
 			// 14/12/2023: I prefer using here just the mean value and not the exponential
         double rate = default(1);
+        
 		// aggiungere le statistic
+
+        // throughput
+        int unitOfTime @unit(s) = default(5s);
+        @signal[requestCounter](type=long);
+        @statistic[requestCounterStat](source="requestCounter";record=mean);
 
     gates:
         // o così o si usa un vettore di clientIN e clientOUT

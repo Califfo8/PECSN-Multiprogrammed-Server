@@ -27,6 +27,13 @@ void Cpu::initialize(){
     queue_ = new cQueue();
     working_ = false;
     // add code for managing a queue
+
+    unitOfTime_ = par("unitOfTime");
+    requestCounterSignal_ = par("requestCounter");
+    registerSignal("requestCounter");
+
+    cMessage * updateThroughput = new cMessage("updateThroughput");
+    scheduleAt( simTime() + unitOfTime_ , updateThroughput );
 }
 
 void Cpu::elaborate_msg_(cMessage * msg)
@@ -53,6 +60,12 @@ void Cpu::elaborate_msg_(cMessage * msg)
    }
 }
 
+void Cpu::elaborate_throughput_stat_(cMessage * msg){
+    emit(requestCounterSignal_ , requestCounter_ );
+    requestCounter_ = 0;
+    scheduleAt( simTime() + unitOfTime_ , msg );
+}
+
 void Cpu::handleMessage(cMessage * msg){
     // arrivo messaggio
         // self_message 
@@ -74,7 +87,11 @@ void Cpu::handleMessage(cMessage * msg){
                 // lo mando subito a lavorare (schedule at)
 
     if ( msg->isSelfMessage() ){
-        elaborate_msg_(msg);
+        if( strcmp(msg->getName() , "updateThroughput" ) == 0 ){
+            elaborate_throughput_stat_(msg);
+        }else{
+            elaborate_msg_(msg);
+        }
     }else{
         
         if ( working_ ){
