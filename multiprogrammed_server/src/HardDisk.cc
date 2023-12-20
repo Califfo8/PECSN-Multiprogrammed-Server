@@ -67,5 +67,9 @@ void HardDisk::handleMessage(cMessage * msg){
 }
 
 void HardDisk::finish(){
-
+        while(!hd_queue_->isEmpty()){
+            cMessage *cleaning = check_and_cast<cMessage*>(hd_queue_->pop());
+            delete cleaning;
+        }
+        delete hd_queue_;
 }

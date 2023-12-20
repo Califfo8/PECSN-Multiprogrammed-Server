@@ -49,5 +49,10 @@ void WebServer::handleMessage(cMessage * msg){
 }
 
 void WebServer::finish(){
-
+    while(!qs_queue_->isEmpty()){
+        cMessage *cleaning = check_and_cast<cMessage*>(qs_queue_->pop());
+        delete cleaning;
+    }
+    delete qs_queue_;
 }
+
