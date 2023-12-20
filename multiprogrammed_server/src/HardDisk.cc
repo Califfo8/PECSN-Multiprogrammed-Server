@@ -31,7 +31,7 @@ void HardDisk::elaborate_msg_(cMessage * msg)
     if(!working_)
     {
         msg->setName("Finish elaboration");
-        simtime_t procTime = exponential( 1 / rate_);
+        simtime_t procTime = exponential( 1 / rate_ , 0 );
         scheduleAt(simTime() + procTime, msg);
         working_ = true;
     }else{

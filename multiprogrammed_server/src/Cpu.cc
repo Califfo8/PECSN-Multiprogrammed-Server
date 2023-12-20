@@ -36,7 +36,7 @@ void Cpu::initialize(){
 
 void Cpu::elaborate_msg_(cMessage * msg)
 {
-   double prob = uniform(0,1);
+   double prob = uniform(0,1,1);
    
    if ( prob <= p1_ ){
         msg->setName("END_T");
@@ -54,7 +54,7 @@ void Cpu::elaborate_msg_(cMessage * msg)
        working_ = false;
    }else{
        cMessage *msg2 = check_and_cast<cMessage*>( queue_->pop() );
-       simtime_t procTime = exponential( 1 / CPUmeanRate_ );
+       simtime_t procTime = exponential( 1 / CPUmeanRate_ , 0);
        scheduleAt( simTime() + procTime , msg2 );
    }
 }

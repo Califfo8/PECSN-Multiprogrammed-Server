@@ -28,7 +28,7 @@ void WebServer::initialize(){
 void WebServer::handleMessage(cMessage * msg){
     if(!msg->isSelfMessage()){
         if(!working_){
-            scheduleAt(simTime() + exponential(1/qs_rate_),msg);
+            scheduleAt(simTime() + exponential( 1 / qs_rate_ , 0 ) , msg );
             working_ = true;
         }
         else {
