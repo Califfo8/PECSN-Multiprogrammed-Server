@@ -31,6 +31,8 @@ class Cpu : public cSimpleModule {
         bool working_;
         //char * msg_;
         //cMessage * msg_;
+        void elaborate_self_msg_(cMessage * msg);
+        void elaborate_external_msg_(cMessage * msg);
         void elaborate_msg_(cMessage * msg);
         void elaborate_throughput_stat_(cMessage * msg);
         // statistic

@@ -65,6 +65,28 @@ void Cpu::elaborate_throughput_stat_(cMessage * msg){
     scheduleAt( simTime() + unitOfTime_ , msg );
 }
 
+void Cpu::elaborate_self_msg_(cMessage * msg){
+    if( strcmp(msg->getName() , "updateThroughput" ) == 0 ){
+        elaborate_throughput_stat_(msg);
+    }else{
+        elaborate_msg_(msg);
+    }
+}
+
+void Cpu::elaborate_external_msg_(cMessage * msg){
+    if ( working_ ){
+            queue_->insert(msg);
+    }else{
+        working_ = true;
+        //strcpy(msg,msg_); // mi salvo il messaggio che mi hanno mandato non so se è utile
+        //strcpy(msg->getName(), msg_); 
+        //msg_ = msg->dup();
+        cMessage * msg2 = new cMessage("job_served");
+        simtime_t procTime = exponential( 1 / CPUmeanRate_ );
+        scheduleAt( simTime() + procTime , msg2 );
+    }
+}
+
 void Cpu::handleMessage(cMessage * msg){
     // arrivo messaggio
         // self_message 
@@ -88,26 +110,9 @@ void Cpu::handleMessage(cMessage * msg){
                 // lo mando subito a lavorare (schedule at)
 
     if ( msg->isSelfMessage() ){
-        if( strcmp(msg->getName() , "updateThroughput" ) == 0 ){
-            elaborate_throughput_stat_(msg);
-        }else{
-            elaborate_msg_(msg);
-        }
+        elaborate_self_msg_(msg);
     }else{
-        
-        if ( working_ ){
-            queue_->insert(msg);
-        }else{
-            working_ = true;
-
-            //strcpy(msg,msg_); // mi salvo il messaggio che mi hanno mandato non so se è utile
-            //strcpy(msg->getName(), msg_); 
-            //msg_ = msg->dup();
-
-            cMessage * msg2 = new cMessage("job_served");
-            simtime_t procTime = exponential( 1 / CPUmeanRate_ );
-            scheduleAt( simTime() + procTime , msg2 );
-        }
+        elaborate_external_msg_(msg);
     }
 }
 
