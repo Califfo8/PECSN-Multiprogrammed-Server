@@ -25,6 +25,8 @@ class WebServer : public cSimpleModule {
         double qs_rate_;
         cQueue * qs_queue_;
         bool working_;
+        void elaborate_self_msg_(cMessage * msg);
+        void elaborate_external_msg_(cMessage * msg);
 
     protected:
         virtual void initialize();

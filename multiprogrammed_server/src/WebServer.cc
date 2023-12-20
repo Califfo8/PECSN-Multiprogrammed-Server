@@ -24,30 +24,37 @@ void WebServer::initialize(){
     qs_rate_ = par("web_server_rate");
 
 }
-
-void WebServer::handleMessage(cMessage * msg){
-    if(!msg->isSelfMessage()){
-        if(!working_){
-            scheduleAt(simTime() + exponential( 1 / qs_rate_ , 0 ) , msg );
-            working_ = true;
-        }
-        else {
-            qs_queue_->insert(msg);
-        }
+void WebServer::elaborate_self_msg_(cMessage * msg){
+    msg->setName("QS_to_CPU");
+    send(msg,"out");
+    if(qs_queue_->isEmpty()){
+        working_ = false;
     }
     else {
-        msg->setName("QS_to_CPU");
-        send(msg,"out");
-        if(qs_queue_->isEmpty()){
-            working_ = false;
-        }
-        else {
-            cMessage *self = check_and_cast <cMessage* > (qs_queue_->pop());
-            scheduleAt(simTime()+ exponential(1/qs_rate_), self);
-            working_ = true;
-        }
+        cMessage *self = check_and_cast <cMessage* > (qs_queue_->pop());
+        scheduleAt(simTime()+ exponential(1/qs_rate_), self);
+        working_ = true;
     }
 }
+
+void WebServer::elaborate_external_msg_(cMessage * msg){
+    if(!working_){
+        scheduleAt(simTime() + exponential( 1 / qs_rate_ , 0 ) , msg );
+        working_ = true;
+    }
+    else {
+        qs_queue_->insert(msg);
+    }
+}
+
+void WebServer::handleMessage(cMessage * msg){
+   if (msg->isSelfMessage() ){
+        elaborate_self_msg_(msg);
+    }else{
+        elaborate_external_msg_(msg);
+    }
+}
+
 
 void WebServer::finish(){
     while(!qs_queue_->isEmpty()){
