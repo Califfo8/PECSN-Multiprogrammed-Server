@@ -20,17 +20,15 @@ Define_Module(Cpu);
 void Cpu::initialize(){
     p1_ = par("p1");
     p2_ = par("p2");
-    //procTime_ = par("procTime");
     CPUmeanRate_ = par("rate");
-    counter_ = 0;
+    requestCounter_ = 0;
     // add signals
     queue_ = new cQueue();
     working_ = false;
     // add code for managing a queue
 
     unitOfTime_ = par("unitOfTime");
-    requestCounterSignal_ = par("requestCounter");
-    registerSignal("requestCounter");
+    requestCounterSignal_ = registerSignal("requestCounter");
 
     cMessage * updateThroughput = new cMessage("updateThroughput");
     scheduleAt( simTime() + unitOfTime_ , updateThroughput );
@@ -42,8 +40,8 @@ void Cpu::elaborate_msg_(cMessage * msg)
    
    if ( prob <= p1_ ){
         msg->setName("END_T");
-        send(msg,"clientOUT");
         requestCounter_++;
+        send(msg,"clientOUT");
    }else if ( prob > p1_ && prob <= p1_ + p2_ ){
         msg->setName("CPU_to_HD");
         send(msg,"hdOUT");
@@ -70,17 +68,19 @@ void Cpu::elaborate_throughput_stat_(cMessage * msg){
 void Cpu::handleMessage(cMessage * msg){
     // arrivo messaggio
         // self_message 
-            // ho finito di elaborare
-            // calcolo la probabilità 
-                // mando in uscita nel punto corretto
-                    // prob <= p1 
-                        // messaggio al client 
-                    // p1 < prob <= p2
-                        // messaggio all'hd
-                    // p1 + p2 < prob
-                        // messaggio al webServer
-            // se coda è libera smetto di lavorare
-            // altrimenti prendo il prossimo dalla coda
+            // elaborazione finita
+                // calcolo la probabilità 
+                    // mando in uscita nel punto corretto
+                        // prob <= p1 
+                            // messaggio al client 
+                        // p1 < prob <= p2
+                            // messaggio all'hd
+                        // p1 + p2 < prob
+                            // messaggio al webServer
+                // se coda è libera smetto di lavorare
+                // altrimenti prendo il prossimo dalla coda
+            // sono passate le unitOfTime
+                // bisogna calcolare il throughput
         // messaggio da esterno
             // server lavora
                 // accodo il messaggio
