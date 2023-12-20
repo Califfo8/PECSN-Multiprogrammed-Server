@@ -43,6 +43,7 @@ void Cpu::elaborate_msg_(cMessage * msg)
    if ( prob <= p1_ ){
         msg->setName("END_T");
         send(msg,"clientOUT");
+        requestCounter_++;
    }else if ( prob > p1_ && prob <= p1_ + p2_ ){
         msg->setName("CPU_to_HD");
         send(msg,"hdOUT");
