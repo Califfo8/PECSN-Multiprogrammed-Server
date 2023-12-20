@@ -117,6 +117,10 @@ void Cpu::handleMessage(cMessage * msg){
 }
 
 void Cpu::finish(){
-
+    while ( !queue_->isEmpty() ){
+        cMessage *msg = check_and_cast<cMessage*>( queue_->pop() );
+        delete msg;
+    }
+    delete queue_;
 }
 
