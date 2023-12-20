@@ -27,7 +27,7 @@ class Cpu : public cSimpleModule {
         double p2_;
         int requestCounter_;
         double CPUmeanRate_;
-        cQueue * queue_;
+        cQueue * CPUqueue_;
         bool working_;
         //char * msg_;
         //cMessage * msg_;
