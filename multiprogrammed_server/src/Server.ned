@@ -21,7 +21,8 @@ package multiprogrammed_server;
 module Server
 {
     parameters:
-		
+
+        @display("bgb=254,130");
     gates:
         // o cos� o si usa un vettore di clientIN e clientOUT
         input clientIN;
@@ -35,7 +36,9 @@ module Server
 
     submodules:
         hd: HardDisk;
-        cpu: Cpu;
+        cpu: Cpu {
+            @display("p=203,61");
+        }
     connections:
         // dove vanno messi i delay
 
@@ -44,7 +47,7 @@ module Server
 
         cpu.webServerOUT --> webServerOUT;
         webServerIN --> cpu.webServerIN;
-        
+
         cpu.clientOUT --> clientOUT;
         clientIN --> cpu.clientIN;
 }
