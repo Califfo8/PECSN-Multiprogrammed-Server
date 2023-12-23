@@ -1,10 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 /.metadata/
-multiprogrammed_server/src/multiprogrammed_server_dbg.exe
-multiprogrammed_server/src/Makefile
-multiprogrammed_server/simulations/results/General-#0.sca
-
 # Ignore build directory
 out/
 multiprogrammed_server/.metadata/
