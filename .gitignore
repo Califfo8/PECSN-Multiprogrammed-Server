@@ -1,7 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 /.metadata/
-multiprogrammed_server/src/Makefile
 multiprogrammed_server/src/multiprogrammed_server_dbg.exe
 multiprogrammed_server/src/Makefile
 multiprogrammed_server/out/clang-debug/src/.last-copts
