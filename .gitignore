@@ -3,14 +3,8 @@
 /.metadata/
 multiprogrammed_server/src/multiprogrammed_server_dbg.exe
 multiprogrammed_server/src/Makefile
-multiprogrammed_server/out/clang-debug/src/.last-copts
-multiprogrammed_server/out/clang-debug/src/Client.o
-multiprogrammed_server/out/clang-debug/src/Client.o.d
-multiprogrammed_server/out/clang-debug/src/Cpu.o
-multiprogrammed_server/out/clang-debug/src/Cpu.o.d
-multiprogrammed_server/out/clang-debug/src/HardDisk.o
-multiprogrammed_server/out/clang-debug/src/HardDisk.o.d
-multiprogrammed_server/out/clang-debug/src/multiprogrammed_server_dbg.exe
-multiprogrammed_server/out/clang-debug/src/WebServer.o
-multiprogrammed_server/out/clang-debug/src/WebServer.o.d
 multiprogrammed_server/simulations/results/General-#0.sca
+
+# Ignore build directory
+out/
+multiprogrammed_server/.metadata/
