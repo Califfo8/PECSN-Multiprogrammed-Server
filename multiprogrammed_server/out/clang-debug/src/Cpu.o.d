@@ -1,6 +1,6 @@
 ../out/clang-debug/src/Cpu.o: Cpu.cc Cpu.h \
-  C:/omnetpp-6.0.2/include/omnetpp.h
+  C:/PerformanceEvaluation/omnetpp-6.0.1-windows-x86_64/omnetpp-6.0.1/include/omnetpp.h
 
 Cpu.h:
 
-C:/omnetpp-6.0.2/include/omnetpp.h:
+C:/PerformanceEvaluation/omnetpp-6.0.1-windows-x86_64/omnetpp-6.0.1/include/omnetpp.h:
