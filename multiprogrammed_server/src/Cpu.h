@@ -29,8 +29,6 @@ class Cpu : public cSimpleModule {
         double CPUmeanRate_;
         cQueue * CPUqueue_;
         bool working_;
-        //char * msg_;
-        //cMessage * msg_;
         void elaborate_self_msg_(cMessage * msg);
         void elaborate_external_msg_(cMessage * msg);
         void elaborate_msg_(cMessage * msg);

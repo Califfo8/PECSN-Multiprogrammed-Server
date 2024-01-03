@@ -30,9 +30,6 @@ module Server
         input webServerIN;
         output webServerOUT;
 
-        //input hdIN;	// inutile
-        //output hdOUT; // inutile
-
     submodules:
         hd: HardDisk;
         cpu: Cpu;

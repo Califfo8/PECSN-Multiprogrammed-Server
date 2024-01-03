@@ -78,10 +78,6 @@ void Cpu::elaborate_external_msg_(cMessage * msg){
             CPUqueue_->insert(msg);
     }else{
         working_ = true;
-        //strcpy(msg,msg_); // mi salvo il messaggio che mi hanno mandato non so se è utile
-        //strcpy(msg->getName(), msg_); 
-        //msg_ = msg->dup();
-        //cMessage * msg2 = new cMessage("job_served"); -> fudging bug
         msg->setName("Job_served");
         simtime_t procTime = exponential( 1 / CPUmeanRate_ );
         scheduleAt( simTime() + procTime , msg );

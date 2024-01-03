@@ -18,20 +18,11 @@
 Define_Module(Client);
 
 void Client::initialize(){
-    // add signals if needed
-
     numClients_ = par("numClients");
-
-    /*
-    cMessage * msg = new cMessage("CLI_to_CPU");
-    send(msg, "out");
-    */
-
     for( int i = 0 ; i < numClients_ ; i++ ){
         cMessage * msg = new cMessage("CLI_to_CPU");
         send(msg,"out");
     }
-
 }
 
 void Client::handleMessage(cMessage * msg){
