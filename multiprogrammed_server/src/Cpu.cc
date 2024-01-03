@@ -79,7 +79,7 @@ void Cpu::elaborate_external_msg_(cMessage * msg){
     }else{
         working_ = true;
         msg->setName("Job_served");
-        simtime_t procTime = exponential( 1 / CPUmeanRate_ );
+        simtime_t procTime = exponential( 1 / CPUmeanRate_ , 0 );
         scheduleAt( simTime() + procTime , msg );
     }
 }

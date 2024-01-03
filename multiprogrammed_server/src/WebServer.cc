@@ -32,7 +32,7 @@ void WebServer::elaborate_self_msg_(cMessage * msg){
     }
     else {
         cMessage *self = check_and_cast <cMessage* > (qs_queue_->pop());
-        scheduleAt(simTime()+ exponential(1/qs_rate_), self);
+        scheduleAt(simTime()+ exponential( 1 / qs_rate_ , 0 ), self);
         working_ = true;
     }
 }
