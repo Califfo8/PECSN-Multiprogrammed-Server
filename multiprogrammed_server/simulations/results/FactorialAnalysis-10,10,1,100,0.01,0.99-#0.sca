@@ -1,8 +1,8 @@
 version 3
-run FactorialAnalysis-37-20231221-13:36:10-14436
+run FactorialAnalysis-74-20231221-16:37:23-17512
 attr configname FactorialAnalysis
-attr datetime 20231221-13:36:10
-attr datetimef 20231221-133610
+attr datetime 20231221-16:37:23
+attr datetimef 20231221-163723
 attr experiment FactorialAnalysis
 attr inifile omnetpp.ini
 attr iterationvars "$0=10, $1=10, $2=1, $3=100, $4=0.01, $5=0.99"
@@ -10,13 +10,13 @@ attr iterationvarsd 10/10/1/100/0.01/0.99
 attr iterationvarsf 10,10,1,100,0.01,0.99-
 attr measurement "$0=10, $1=10, $2=1, $3=100, $4=0.01, $5=0.99"
 attr network System
-attr processid 14436
+attr processid 17512
 attr repetition 0
 attr replication #0
 attr resultdir results
-attr runnumber 37
+attr runnumber 74
 attr seedset 0
-config repeat 1
+config repeat 2
 config **.client.numClients 10
 config **.cpu.rate 10
 config **.hd.rateProcessing 1

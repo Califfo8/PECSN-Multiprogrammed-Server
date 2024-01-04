@@ -1,0 +1,53 @@
+version 3
+run FactorialAnalysis-113-20231221-16:37:29-1256
+attr configname FactorialAnalysis
+attr datetime 20231221-16:37:29
+attr datetimef 20231221-163729
+attr experiment FactorialAnalysis
+attr inifile omnetpp.ini
+attr iterationvars "$0=10, $1=100, $2=10, $3=1, $4=0.01, $5=0"
+attr iterationvarsd 10/100/10/1/0.01/0
+attr iterationvarsf 10,100,10,1,0.01,0-
+attr measurement "$0=10, $1=100, $2=10, $3=1, $4=0.01, $5=0"
+attr network System
+attr processid 1256
+attr repetition 1
+attr replication #1
+attr resultdir results
+attr runnumber 113
+attr seedset 1
+config repeat 2
+config **.client.numClients 10
+config **.cpu.rate 100
+config **.hd.rateProcessing 10
+config **.webServer.web_server_rate 1
+config **.p1 0.01
+config **.p2 0
+config network System
+config num-rngs 4
+config **.cpu.rng-0 0
+config **.cpu.rng-1 1
+config **.hd.rng-0 2
+config **.webServer.rng-0 3
+config repeat 5
+config seed-set 1
+config sim-time-limit 60s
+
+par System.client typename "\"multiprogrammed_server.Client\""
+par System.client numClients 10
+par System.server.hd typename "\"multiprogrammed_server.HardDisk\""
+par System.server.hd rateProcessing 10
+par System.server.cpu typename "\"multiprogrammed_server.Cpu\""
+par System.server.cpu p1 0.01
+par System.server.cpu p2 0
+par System.server.cpu rate 100
+par System.server.cpu unitOfTime 5s
+attr unit s
+scalar System.server.cpu requestCounterStat:mean 0.083333333333333
+attr recordingmode mean
+attr source requestCounter
+par System.server typename "\"multiprogrammed_server.Server\""
+par System.webServer typename "\"multiprogrammed_server.WebServer\""
+par System.webServer web_server_rate 1
+par System typename "\"multiprogrammed_server.simulations.System\""
+
