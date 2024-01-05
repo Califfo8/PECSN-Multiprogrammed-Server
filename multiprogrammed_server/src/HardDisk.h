@@ -17,6 +17,8 @@
 #define HARDDISK_H_
 
 #include <omnetpp.h>
+#include "transaction_m.h"
+
 using namespace omnetpp;
 
 class HardDisk : public cSimpleModule {
@@ -25,12 +27,12 @@ class HardDisk : public cSimpleModule {
         double rate_;
         bool working_;
         cQueue* hd_queue_;
-        void elaborate_msg_(cMessage * msg);
-        void elaborate_self_msg_(cMessage * msg);
+        void elaborate_msg_(Transaction * msg);
+        void elaborate_self_msg_(Transaction * msg);
 
     protected:
         virtual void initialize();
-        virtual void handleMessage(cMessage *msg);
+        virtual void handleMessage(Transaction *msg);
         virtual void finish();
 };
 

@@ -16,7 +16,7 @@
 //
 // TODO generated message class
 //
-packet Transaction {
+message Transaction {
     int ID;
     simtime_t startTransaction;
 }

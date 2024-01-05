@@ -17,6 +17,7 @@
 #define CLIENT_H_
 
 #include <omnetpp.h>
+#include "transaction_m.h"
 using namespace omnetpp;
 
 class Client : public cSimpleModule {
@@ -25,7 +26,7 @@ class Client : public cSimpleModule {
         int numClients_;
     protected:
         virtual void initialize();
-        virtual void handleMessage(cMessage *msg);
+        virtual void handleMessage(Transaction *msg);
         virtual void finish();
 };
 

@@ -20,14 +20,17 @@ Define_Module(Client);
 void Client::initialize(){
     numClients_ = par("numClients");
     for( int i = 0 ; i < numClients_ ; i++ ){
-        cMessage * msg = new cMessage("CLI_to_CPU");
+        Transaction * msg = new Transaction("CLI_to_CPU");
+        msg->setID(i);
+        mag->setstartTransaction(simTime());
         send(msg,"out");
     }
 }
 
-void Client::handleMessage(cMessage * msg){
+void Client::handleMessage(Transaction * msg){
+    R =
     delete msg;
-    cMessage * msg2 = new cMessage("CLI_to_CPU");
+    Transaction * msg2 = new Transaction("CLI_to_CPU");
     send(msg2,"out"); 
 }
 
