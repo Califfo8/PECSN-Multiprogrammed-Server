@@ -3,3 +3,8 @@
 /.metadata/
 # Ignore build directory
 multiprogrammed_server/.metadata/
+multiprogrammed_server/src/*.exe
+multiprogrammed_server/simulations/results
+Factorial-Analysis/.idea
+Factorial-Analysis/__pycache__
+multiprogrammed_server/.settings
