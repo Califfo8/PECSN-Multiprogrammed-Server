@@ -18,8 +18,11 @@
 
 class Transaction;
 /**
- * Class generated from <tt>transaction.msg:20</tt> by opp_msgtool.
+ * Class generated from <tt>transaction.msg:19</tt> by opp_msgtool.
  * <pre>
+ * //
+ * // TODO generated message class
+ * //
  * message Transaction
  * {
  *     int ID;

@@ -24,6 +24,7 @@ class Client : public cSimpleModule {
     // NOTE: "_" in name stands of properties stands for private, as seen during lectures
     private:
         int numClients_;
+        simsignal_t responseTimeSignal_;
     protected:
         virtual void initialize();
         virtual void handleMessage(Transaction *msg);
