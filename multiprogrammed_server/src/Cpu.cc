@@ -85,11 +85,12 @@ void Cpu::elaborate_external_msg_(Transaction * msg){
 }
 
 
-void Cpu::handleMessage(Transaction * msg){
-    if ( msg->isSelfMessage() ){
-        elaborate_self_msg_(msg);
+void Cpu::handleMessage(cMessage * msg){
+    Transaction * tempMsg = check_and_cast<Transaction*>(msg);
+    if ( tempMsg->isSelfMessage() ){
+        elaborate_self_msg_(tempMsg);
     }else{
-        elaborate_external_msg_(msg);
+        elaborate_external_msg_(tempMsg);
     }
 }
 

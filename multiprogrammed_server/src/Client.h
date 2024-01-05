@@ -27,7 +27,7 @@ class Client : public cSimpleModule {
         simsignal_t responseTimeSignal_;
     protected:
         virtual void initialize();
-        virtual void handleMessage(Transaction *msg);
+        virtual void handleMessage(cMessage *msg);
         virtual void finish();
 };
 

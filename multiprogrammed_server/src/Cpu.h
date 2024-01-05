@@ -40,7 +40,7 @@ class Cpu : public cSimpleModule {
         simsignal_t requestCounterSignal_;
     protected:
         virtual void initialize();
-        virtual void handleMessage(Transaction *msg);
+        virtual void handleMessage(cMessage *msg);
         virtual void finish();
 };
 

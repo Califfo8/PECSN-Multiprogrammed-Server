@@ -28,11 +28,12 @@ void Client::initialize(){
     }
 }
 
-void Client::handleMessage(Transaction * msg){
+void Client::handleMessage(cMessage * msg){
+    Transaction * tempMsg = check_and_cast<Transaction*>(msg);
     simtime_t arrivalTime = simTime();
-    simtime_t departureTime = msg->getStartTransaction();
+    simtime_t departureTime = tempMsg->getStartTransaction();
     emit(responseTimeSignal_, arrivalTime - departureTime );
-    delete msg;
+    delete tempMsg;
     Transaction * msg2 = new Transaction("CLI_to_CPU");
     send(msg2,"out"); 
 }
