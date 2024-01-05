@@ -31,7 +31,7 @@ class WebServer : public cSimpleModule {
 
     protected:
         virtual void initialize();
-        virtual void handleMessage(Transaction *msg);
+        virtual void handleMessage(cMessage *msg);
         virtual void finish();
 };
 

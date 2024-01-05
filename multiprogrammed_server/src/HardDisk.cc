@@ -56,13 +56,13 @@ void HardDisk::elaborate_self_msg_(Transaction * msg)
             }
 }
 
-void HardDisk::handleMessage(Transaction * msg){
+void HardDisk::handleMessage(cMessage * msg){
 
     // Il messaggio è di fine elaborazione
     if(msg->isSelfMessage())
-        elaborate_self_msg_(msg);
+        elaborate_self_msg_(check_and_cast<Transaction*>(msg));
     else//Il messaggio è della CPU
-        elaborate_msg_(msg);
+        elaborate_msg_(check_and_cast<Transaction*>(msg));
 
 
 }

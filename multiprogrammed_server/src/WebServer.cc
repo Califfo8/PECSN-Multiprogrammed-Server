@@ -47,11 +47,11 @@ void WebServer::elaborate_external_msg_(Transaction * msg){
     }
 }
 
-void WebServer::handleMessage(Transaction * msg){
+void WebServer::handleMessage(cMessage * msg){
    if (msg->isSelfMessage() ){
-        elaborate_self_msg_(msg);
+        elaborate_self_msg_(check_and_cast<Transaction*>(msg));
     }else{
-        elaborate_external_msg_(msg);
+        elaborate_external_msg_(check_and_cast<Transaction*>(msg));
     }
 }
 
