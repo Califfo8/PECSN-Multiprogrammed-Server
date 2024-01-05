@@ -7,5 +7,5 @@ multiprogrammed_server/src/*.exe
 multiprogrammed_server/simulations/results
 Factorial-Analysis/.idea
 Factorial-Analysis/__pycache__
-multiprogrammed_server/.settings
-multiprogrammed_server/out
+multiprogrammed_server/.settings/
+multiprogrammed_server/out/
