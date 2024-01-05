@@ -17,7 +17,7 @@
 #define WEBSERVER_H_
 
 #include <omnetpp.h>
-#include "transaction.msg"
+#include "transaction_m.h"
 using namespace omnetpp;
 
 class WebServer : public cSimpleModule {
