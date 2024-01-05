@@ -8,7 +8,7 @@ if __name__ == '__main__':
     factor_names1 = ["Nc", "CPUr", "HDr", "WSr", "p1", "p2"]
     factor_names2 = ["A", "B"]
     FA = FactorialAnalysis(factor_names1, "prova1.xlsx")
-
     FA.compute_result_matrix()
     FA.test_hp_and_confidence(0.95)
+
 

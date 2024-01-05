@@ -282,3 +282,10 @@ class FactorialAnalysis:
         self.test_Normal_HP()
         self.test_Homoscedasticity_HP()
         self.compute_confidence_interval(confidenza)
+
+    def help(self):
+        Text = "Questo programma utilizza come input un file di excel avente lo stesso formato delle tabelle di Omnet++, il file deve \n"
+        Text = Text + "essere inserito nella cartella Data. Inoltre si necessita di un vettore stringa contenente il nome dei fattori in studio, \n"
+        Text = Text +"l'ordine dei nomi deve essere identico all'associazione che compie Omnet++ con i numeri (ex. $0) della colonna Measurement.\n"
+        Text = Text +"Tutti i risultati sono espressi attraverso una serie di file excel nella cartella Result."
+        print(Text)
