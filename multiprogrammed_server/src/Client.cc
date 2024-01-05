@@ -35,6 +35,7 @@ void Client::handleMessage(cMessage * msg){
     emit(responseTimeSignal_, arrivalTime - departureTime );
     delete tempMsg;
     Transaction * msg2 = new Transaction("CLI_to_CPU");
+    msg2->setStartTransaction(simTime());
     send(msg2,"out"); 
 }
 
