@@ -30,11 +30,11 @@ void Cpu::initialize(){
     unitOfTime_ = par("unitOfTime");
     requestCounterSignal_ = registerSignal("requestCounter");
 
-    cMessage * updateThroughput = new cMessage("updateThroughput");
+    Transaction * updateThroughput = new Transaction("updateThroughput");
     scheduleAt( simTime() + unitOfTime_ , updateThroughput );
 }
 
-void Cpu::elaborate_msg_(cMessage * msg)
+void Cpu::elaborate_msg_(Transaction * msg)
 {
    double prob = uniform(0,1,1);
    
@@ -53,19 +53,19 @@ void Cpu::elaborate_msg_(cMessage * msg)
    if ( CPUqueue_->isEmpty() ){
        working_ = false;
    }else{
-       cMessage *msg2 = check_and_cast<cMessage*>( CPUqueue_->pop() );
+       Transaction *msg2 = check_and_cast<Transaction*>( CPUqueue_->pop() );
        simtime_t procTime = exponential( 1 / CPUmeanRate_ , 0);
        scheduleAt( simTime() + procTime , msg2 );
    }
 }
 
-void Cpu::elaborate_throughput_stat_(cMessage * msg){
+void Cpu::elaborate_throughput_stat_(Transaction * msg){
     emit(requestCounterSignal_ , requestCounter_ );
     requestCounter_ = 0;
     scheduleAt( simTime() + unitOfTime_ , msg );
 }
 
-void Cpu::elaborate_self_msg_(cMessage * msg){
+void Cpu::elaborate_self_msg_(Transaction * msg){
     if( strcmp(msg->getName() , "updateThroughput" ) == 0 ){
         elaborate_throughput_stat_(msg);
     }else{
@@ -73,7 +73,7 @@ void Cpu::elaborate_self_msg_(cMessage * msg){
     }
 }
 
-void Cpu::elaborate_external_msg_(cMessage * msg){
+void Cpu::elaborate_external_msg_(Transaction * msg){
     if ( working_ ){
             CPUqueue_->insert(msg);
     }else{
@@ -85,7 +85,7 @@ void Cpu::elaborate_external_msg_(cMessage * msg){
 }
 
 
-void Cpu::handleMessage(cMessage * msg){
+void Cpu::handleMessage(Transaction * msg){
     if ( msg->isSelfMessage() ){
         elaborate_self_msg_(msg);
     }else{
@@ -95,7 +95,7 @@ void Cpu::handleMessage(cMessage * msg){
 
 void Cpu::finish(){
     while ( !CPUqueue_->isEmpty() ){
-        cMessage *msg = check_and_cast<cMessage*>( CPUqueue_->pop() );
+        Transaction *msg = check_and_cast<Transaction*>( CPUqueue_->pop() );
         delete msg;
     }
     delete CPUqueue_;
