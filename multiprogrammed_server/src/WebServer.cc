@@ -23,26 +23,31 @@ void WebServer::initialize(){
     working_ = false;
     qs_rate_ = par("web_server_rate");
 
+    utilizationWsSignal_ = registerSignal("utilizationWs");
+
 }
 void WebServer::elaborate_self_msg_(Transaction * msg){
     msg->setName("QS_to_CPU");
     send(msg,"out");
     if(qs_queue_->isEmpty()){
         working_ = false;
+        totalWorked_ += ( simTime() - startWorking_ );
     }
     else {
-        Transaction *self = check_and_cast <Transaction* > (qs_queue_->pop());
+        Transaction *self = check_and_cast <Transaction*> (qs_queue_->pop());
         scheduleAt(simTime()+ exponential( 1 / qs_rate_ , 0 ), self);
-        working_ = true;
+        working_ = true; // useless?
     }
 }
 
 void WebServer::elaborate_external_msg_(Transaction * msg){
-    if(!working_){
-        scheduleAt(simTime() + exponential( 1 / qs_rate_ , 0 ) , msg );
+    if( !working_ ){
+        startWorking_ = simTime();
         working_ = true;
-    }
-    else {
+        // msg->setName("Job_served");
+        // simtime_t procTime --> sostituire sotto se vogliamo
+        scheduleAt(simTime() + exponential( 1 / qs_rate_ , 0 ) , msg );
+    }else{
         qs_queue_->insert(msg);
     }
 }
@@ -62,5 +67,7 @@ void WebServer::finish(){
         delete cleaning;
     }
     delete qs_queue_;
+
+    emit(utilizationWsSignal_ , totalWorked_ / simTime() );
 }
 

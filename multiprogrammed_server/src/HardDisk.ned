@@ -24,7 +24,7 @@ simple HardDisk
         double rateProcessing = default(1);
         // servono statistic qui?
         @signal[utilizationHd](type=double);
-        @statistic[utilizationCpuStat](source="utilizationCpu";record=count);
+        @statistic[utilizationHdStat](source="utilizationHd";record=count);
     gates:
         input in;
         output out;

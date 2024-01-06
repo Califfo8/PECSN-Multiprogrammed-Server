@@ -26,9 +26,16 @@ class WebServer : public cSimpleModule {
         double qs_rate_;
         cQueue * qs_queue_;
         bool working_;
+
+        // utilization
+        simtime_t startWorking_;
+        simtime_t totalWorked_;
+
         void elaborate_self_msg_(Transaction * msg);
         void elaborate_external_msg_(Transaction * msg);
 
+        // statistic
+        simsignal_t utilizationWsSignal_
     protected:
         virtual void initialize();
         virtual void handleMessage(cMessage *msg);

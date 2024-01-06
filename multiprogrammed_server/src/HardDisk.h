@@ -27,8 +27,15 @@ class HardDisk : public cSimpleModule {
         double rate_;
         bool working_;
         cQueue* hd_queue_;
+
+        simtime_t startWorking_;
+        simtime_t totalWorked_;
+
         void elaborate_msg_(Transaction * msg);
         void elaborate_self_msg_(Transaction * msg);
+
+        // statistic
+        simsignal_t utilizationHdSignal_;
 
     protected:
         virtual void initialize();

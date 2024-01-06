@@ -22,7 +22,10 @@ simple WebServer
 {
     parameters:
         double web_server_rate = default(1); // stesso discorso fatti in cpu.ned
-        // servono statistic qui?
+        // statistic
+        // utilization
+        @signal[utilizationWs](type=double);
+        @statistic[utilizationWsStat](source="utilizationWs";record=count);
    	gates:
    	    input in;
    	    output out;

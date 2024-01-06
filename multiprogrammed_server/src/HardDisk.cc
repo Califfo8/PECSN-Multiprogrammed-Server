@@ -21,7 +21,7 @@ void HardDisk::initialize(){
     rate_ = par("rateProcessing");
     working_ = false;
     // add signals if needed
-
+    utilizationHdSignal_ = registerSignal("utilizationHd");
     // add code for managing a queue
     hd_queue_ = new cQueue();
 }
@@ -34,6 +34,7 @@ void HardDisk::elaborate_msg_(Transaction * msg)
         simtime_t procTime = exponential( 1 / rate_ , 0 );
         scheduleAt(simTime() + procTime, msg);
         working_ = true;
+        startWorking_ = simTime();
     }else{
      //Altrimenti ho già un elaborazione in corso, e il messaggio si accoda
         hd_queue_->insert(msg);
@@ -47,7 +48,8 @@ void HardDisk::elaborate_self_msg_(Transaction * msg)
             msg->setName("HD_to_CPU");
             send(msg, "out");
             working_ = false;
-
+            
+            totalWorked_ += ( simTime() - startWorking_ );
             //Se la coda è piena prendo un altro messaggio e riparto
             if(!hd_queue_->isEmpty())
             {
@@ -57,14 +59,11 @@ void HardDisk::elaborate_self_msg_(Transaction * msg)
 }
 
 void HardDisk::handleMessage(cMessage * msg){
-
     // Il messaggio è di fine elaborazione
     if(msg->isSelfMessage())
         elaborate_self_msg_(check_and_cast<Transaction*>(msg));
     else//Il messaggio è della CPU
         elaborate_msg_(check_and_cast<Transaction*>(msg));
-
-
 }
 
 void HardDisk::finish(){
@@ -73,4 +72,6 @@ void HardDisk::finish(){
             delete cleaning;
         }
         delete hd_queue_;
+
+        emit(utilizationHdSignal_ , totalWorked_ / simTime() );
 }
