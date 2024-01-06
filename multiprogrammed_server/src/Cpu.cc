@@ -30,6 +30,8 @@ void Cpu::initialize(){
     unitOfTime_ = par("unitOfTime");
     requestCounterSignal_ = registerSignal("requestCounter");
 
+    utilizationCpuSignal_ = registerSignal("utilizationCpu");
+
     Transaction * updateThroughput = new Transaction("updateThroughput");
     scheduleAt( simTime() + unitOfTime_ , updateThroughput );
 }
@@ -110,6 +112,6 @@ void Cpu::finish(){
     }
     delete CPUqueue_;
 
-    emit(utilizationSignal_ , totalWorked_ / simTime() );
+    emit(utilizationCpuSignal_ , totalWorked_ / simTime() );
 }
 

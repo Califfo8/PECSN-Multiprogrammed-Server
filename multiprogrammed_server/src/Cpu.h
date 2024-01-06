@@ -40,7 +40,7 @@ class Cpu : public cSimpleModule {
         // statistic
         simtime_t unitOfTime_;
         simsignal_t requestCounterSignal_;
-        simsignal_t utilizationSignal_;
+        simsignal_t utilizationCpuSignal_;
     protected:
         virtual void initialize();
         virtual void handleMessage(cMessage *msg);

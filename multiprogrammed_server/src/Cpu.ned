@@ -32,11 +32,11 @@ simple Cpu
         @statistic[requestCounterStat](source="requestCounter";record=mean,vector);
 
         // utilization
-        @signal[utilization](type=double);
-        @statistic[utilizationStat](source="utilization";record=count,vector)
+        @signal[utilizationCpu](type=double);
+        @statistic[utilizationCpuStat](source="utilizationCpu";record=count);
 
     gates:
-        
+
         input clientIN;
         output clientOUT;
 
