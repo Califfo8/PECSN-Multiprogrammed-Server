@@ -30,6 +30,7 @@ class HardDisk : public cSimpleModule {
 
         simtime_t startWorking_;
         simtime_t totalWorked_;
+        simtime_t timeWindow_;
 
         void elaborate_msg_(Transaction * msg);
         void elaborate_self_msg_(Transaction * msg);

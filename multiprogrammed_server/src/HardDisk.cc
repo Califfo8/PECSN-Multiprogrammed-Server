@@ -22,8 +22,12 @@ void HardDisk::initialize(){
     working_ = false;
     // add signals if needed
     utilizationHdSignal_ = registerSignal("utilizationHd");
+    timeWindow_ = registerSignal("utilizationHd");
     // add code for managing a queue
     hd_queue_ = new cQueue();
+    //Message for the utilization sampling
+    Transaction *msg = new Transaction("updateUtilizationHd");
+    scheduleAt( simTime() + timeWindow_ , msg);
 }
 void HardDisk::elaborate_msg_(Transaction * msg)
 {
@@ -44,6 +48,10 @@ void HardDisk::elaborate_msg_(Transaction * msg)
 
 void HardDisk::elaborate_self_msg_(Transaction * msg)
 {
+    if( strcmp(msg->getName() , "updateUtilizationHd") == 0 ){
+        emit(utilizationHdSignal_ , totalWorked_ / simTime() );
+        return;
+    }
     //Invio il messaggio di risposta
             msg->setName("HD_to_CPU");
             send(msg, "out");
