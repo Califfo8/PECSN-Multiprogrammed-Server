@@ -35,7 +35,7 @@ class WebServer : public cSimpleModule {
         void elaborate_external_msg_(Transaction * msg);
 
         // statistic
-        simsignal_t utilizationWsSignal_
+        simsignal_t utilizationWsSignal_;
     protected:
         virtual void initialize();
         virtual void handleMessage(cMessage *msg);
