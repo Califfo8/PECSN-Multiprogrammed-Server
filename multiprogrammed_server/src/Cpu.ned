@@ -34,7 +34,7 @@ simple Cpu
 
         // utilization
         @signal[utilizationCpu](type=double);
-        @statistic[utilizationCpuStat](source="utilizationCpu";record=mean, vector);
+        @statistic[utilizationCpuStat](source="utilizationCpu";record=mean,vector);
 
     gates:
 
