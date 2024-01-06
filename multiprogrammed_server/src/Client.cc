@@ -19,15 +19,23 @@ Define_Module(Client);
 
 void Client::initialize(){
     numClients_ = par("numClients");
+    responseTimeSignal_ = registerSignal("responseTime");
     for( int i = 0 ; i < numClients_ ; i++ ){
-        cMessage * msg = new cMessage("CLI_to_CPU");
+        Transaction * msg = new Transaction("CLI_to_CPU");
+        msg->setID(i);
+        msg->setStartTransaction(simTime());
         send(msg,"out");
     }
 }
 
 void Client::handleMessage(cMessage * msg){
-    delete msg;
-    cMessage * msg2 = new cMessage("CLI_to_CPU");
+    Transaction * tempMsg = check_and_cast<Transaction*>(msg);
+    simtime_t arrivalTime = simTime();
+    simtime_t departureTime = tempMsg->getStartTransaction();
+    emit(responseTimeSignal_, arrivalTime - departureTime );
+    delete tempMsg;
+    Transaction * msg2 = new Transaction("CLI_to_CPU");
+    msg2->setStartTransaction(simTime());
     send(msg2,"out"); 
 }
 

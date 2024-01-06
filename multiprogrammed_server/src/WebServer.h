@@ -17,6 +17,7 @@
 #define WEBSERVER_H_
 
 #include <omnetpp.h>
+#include "transaction_m.h"
 using namespace omnetpp;
 
 class WebServer : public cSimpleModule {
@@ -25,8 +26,8 @@ class WebServer : public cSimpleModule {
         double qs_rate_;
         cQueue * qs_queue_;
         bool working_;
-        void elaborate_self_msg_(cMessage * msg);
-        void elaborate_external_msg_(cMessage * msg);
+        void elaborate_self_msg_(Transaction * msg);
+        void elaborate_external_msg_(Transaction * msg);
 
     protected:
         virtual void initialize();

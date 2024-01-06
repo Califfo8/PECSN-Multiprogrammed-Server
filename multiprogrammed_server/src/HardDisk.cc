@@ -25,7 +25,7 @@ void HardDisk::initialize(){
     // add code for managing a queue
     hd_queue_ = new cQueue();
 }
-void HardDisk::elaborate_msg_(cMessage * msg)
+void HardDisk::elaborate_msg_(Transaction * msg)
 {
     //Se non sto elaborando alcun messaggio, quindi lo elaboro
     if(!working_)
@@ -41,7 +41,7 @@ void HardDisk::elaborate_msg_(cMessage * msg)
 
 }
 
-void HardDisk::elaborate_self_msg_(cMessage * msg)
+void HardDisk::elaborate_self_msg_(Transaction * msg)
 {
     //Invio il messaggio di risposta
             msg->setName("HD_to_CPU");
@@ -51,7 +51,7 @@ void HardDisk::elaborate_self_msg_(cMessage * msg)
             //Se la coda è piena prendo un altro messaggio e riparto
             if(!hd_queue_->isEmpty())
             {
-                msg = check_and_cast<cMessage*>( hd_queue_->pop() );
+                msg = check_and_cast<Transaction*>( hd_queue_->pop() );
                 elaborate_msg_(msg);
             }
 }
@@ -60,9 +60,9 @@ void HardDisk::handleMessage(cMessage * msg){
 
     // Il messaggio è di fine elaborazione
     if(msg->isSelfMessage())
-        elaborate_self_msg_(msg);
+        elaborate_self_msg_(check_and_cast<Transaction*>(msg));
     else//Il messaggio è della CPU
-        elaborate_msg_(msg);
+        elaborate_msg_(check_and_cast<Transaction*>(msg));
 
 
 }

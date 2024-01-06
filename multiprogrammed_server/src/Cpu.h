@@ -17,6 +17,8 @@
 #define CPU_H_
 
 #include <omnetpp.h>
+#include "transaction_m.h"
+
 using namespace omnetpp;
 
 class Cpu : public cSimpleModule {
@@ -29,10 +31,10 @@ class Cpu : public cSimpleModule {
         double CPUmeanRate_;
         cQueue * CPUqueue_;
         bool working_;
-        void elaborate_self_msg_(cMessage * msg);
-        void elaborate_external_msg_(cMessage * msg);
-        void elaborate_msg_(cMessage * msg);
-        void elaborate_throughput_stat_(cMessage * msg);
+        void elaborate_self_msg_(Transaction * msg);
+        void elaborate_external_msg_(Transaction * msg);
+        void elaborate_msg_(Transaction * msg);
+        void elaborate_throughput_stat_(Transaction * msg);
         // statistic
         simtime_t unitOfTime_;
         simsignal_t requestCounterSignal_;

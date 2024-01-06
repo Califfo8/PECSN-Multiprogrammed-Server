@@ -35,7 +35,7 @@ simple Cpu
 		// aggiungere le statistic
 
         // throughput
-        int unitOfTime @unit(s) = default(5s);
+        int unitOfTime @unit(s) = default(1s);
         @signal[requestCounter](type=long);
         @statistic[requestCounterStat](source="requestCounter";record=mean);
 

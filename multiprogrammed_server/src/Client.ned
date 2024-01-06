@@ -25,6 +25,8 @@ simple Client
     	// quindi si fa che questo simple Module rappresenta N client
     	// o si usano N client separati ( da come parlato sabato sera la prima soluzione)
     	// nel caso i messaggi devono comprendere che client �?
+		@signal[responseTime](type=double);
+        @statistic[responseTimeStat](source="responseTime";record=mean);
     gates: 
         input in;
         output out;
