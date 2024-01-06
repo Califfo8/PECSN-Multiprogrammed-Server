@@ -22,9 +22,10 @@ simple HardDisk
 {
     parameters:
         double rateProcessing = default(1);
-        // servono statistic qui?
+        int timeWindow = default(10)
+        // Statistic
         @signal[utilizationHd](type=double);
-        @statistic[utilizationHdStat](source="utilizationHd";record=count);
+        @statistic[utilizationHdStat](source="utilizationHd";record=count,vector);
     gates:
         input in;
         output out;
