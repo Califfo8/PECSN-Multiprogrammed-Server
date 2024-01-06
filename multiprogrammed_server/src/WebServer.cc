@@ -24,9 +24,16 @@ void WebServer::initialize(){
     qs_rate_ = par("web_server_rate");
 
     utilizationWsSignal_ = registerSignal("utilizationWs");
-
+    Transaction * updateUtilizationWs = new Transaction("updateUtilizationCpu");
+    scheduleAt( simTime() + timeWindow_ , updateUtilizationWs );
 }
-void WebServer::elaborate_self_msg_(Transaction * msg){
+
+void WebServer::elaborate_utilization_stat_(Transaction * msg){
+    emit( utilizationWsSignal_ , totalWorked_ / simTime() );
+    scheduleAt( simTime() + timeWindow_ , msg );
+}
+
+void WebServer::elaborate_msg_(Transaction * msg){
     msg->setName("QS_to_CPU");
     send(msg,"out");
     if(qs_queue_->isEmpty()){
@@ -37,6 +44,14 @@ void WebServer::elaborate_self_msg_(Transaction * msg){
         Transaction *self = check_and_cast <Transaction*> (qs_queue_->pop());
         scheduleAt(simTime()+ exponential( 1 / qs_rate_ , 0 ), self);
         working_ = true; // useless?
+    }
+}
+
+void WebServer::elaborate_self_msg_(Transaction * msg){
+    if( strcmp(msg->getName() , "updateUtilizationWs") == 0 ){
+        elaborate_utilization_stat_(msg);
+    }else{
+        elaborate_msg_(msg);
     }
 }
 
