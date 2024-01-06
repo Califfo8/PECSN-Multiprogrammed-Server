@@ -21,26 +21,22 @@ package multiprogrammed_server;
 simple Cpu
 {
     parameters:
-        double p1 = default(0.3); // shouldn't they be in the compound module? It doesn't change the behaviour of the code
+        double p1 = default(0.3); 
         double p2 = default(0.3);
-        //double procTime @unit(s) = exponential(1s);
-        	// non mi torna procTime, come decido quanto vale il rate (in questo caso 1s)
-        	// devo mettere direttamente che il fattore � il rate e quindi poi nel codice
-        	// .cc prendo il parametro da qui e ci calcolo sopra l'esponenziale?
-        	// visto che poi va cambiato il rate per fare le statistiche e si fa dal .ini
-
-			// 14/12/2023: I prefer using here just the mean value and not the exponential
         double rate = default(1);
         
 		// aggiungere le statistic
-
-        // throughput
         int unitOfTime @unit(s) = default(1s);
+        // throughput
         @signal[requestCounter](type=long);
-        @statistic[requestCounterStat](source="requestCounter";record=mean);
+        @statistic[requestCounterStat](source="requestCounter";record=mean,vector);
+
+        // utilization
+        @signal[utilization](type=double);
+        @statistic[utilizationStat](source="utilization";record=count,vector)
 
     gates:
-        // o così o si usa un vettore di clientIN e clientOUT
+        
         input clientIN;
         output clientOUT;
 

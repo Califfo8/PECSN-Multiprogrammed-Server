@@ -52,6 +52,11 @@ void Cpu::elaborate_msg_(Transaction * msg)
 
    if ( CPUqueue_->isEmpty() ){
        working_ = false;
+       
+       // utilization 
+       //emit( utilizationSignal_, simTime()-startWorking_ );
+       totalWorked_ += ( simTime() - startWorking_ );
+
    }else{
        Transaction *msg2 = check_and_cast<Transaction*>( CPUqueue_->pop() );
        simtime_t procTime = exponential( 1 / CPUmeanRate_ , 0);
@@ -77,6 +82,10 @@ void Cpu::elaborate_external_msg_(Transaction * msg){
     if ( working_ ){
             CPUqueue_->insert(msg);
     }else{
+
+        // utilization
+        startWorking_ = simTime();
+
         working_ = true;
         msg->setName("Job_served");
         simtime_t procTime = exponential( 1 / CPUmeanRate_ , 0 );
@@ -100,5 +109,7 @@ void Cpu::finish(){
         delete msg;
     }
     delete CPUqueue_;
+
+    emit(utilizationSignal_ , totalWorked_ / simTime() );
 }
 

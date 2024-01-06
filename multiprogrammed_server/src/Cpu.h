@@ -31,6 +31,8 @@ class Cpu : public cSimpleModule {
         double CPUmeanRate_;
         cQueue * CPUqueue_;
         bool working_;
+        simtime_t startWorking_;
+        simtime_t totalWorked_;
         void elaborate_self_msg_(Transaction * msg);
         void elaborate_external_msg_(Transaction * msg);
         void elaborate_msg_(Transaction * msg);
@@ -38,6 +40,7 @@ class Cpu : public cSimpleModule {
         // statistic
         simtime_t unitOfTime_;
         simsignal_t requestCounterSignal_;
+        simsignal_t utilizationSignal_;
     protected:
         virtual void initialize();
         virtual void handleMessage(cMessage *msg);
