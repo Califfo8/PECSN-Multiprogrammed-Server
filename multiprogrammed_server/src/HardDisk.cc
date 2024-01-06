@@ -19,10 +19,10 @@ Define_Module(HardDisk);
 
 void HardDisk::initialize(){
     rate_ = par("rateProcessing");
+    timeWindow_ = par("timeWindow");
     working_ = false;
     // add signals if needed
     utilizationHdSignal_ = registerSignal("utilizationHd");
-    timeWindow_ = registerSignal("utilizationHd");
     // add code for managing a queue
     hd_queue_ = new cQueue();
     //Message for the utilization sampling
@@ -50,6 +50,7 @@ void HardDisk::elaborate_self_msg_(Transaction * msg)
 {
     if( strcmp(msg->getName() , "updateUtilizationHd") == 0 ){
         emit(utilizationHdSignal_ , totalWorked_ / simTime() );
+        scheduleAt( simTime() + timeWindow_ , msg);
         return;
     }
     //Invio il messaggio di risposta
