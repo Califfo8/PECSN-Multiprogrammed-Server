@@ -37,8 +37,10 @@ class Cpu : public cSimpleModule {
         void elaborate_external_msg_(Transaction * msg);
         void elaborate_msg_(Transaction * msg);
         void elaborate_throughput_stat_(Transaction * msg);
+        void elaborate_utilization_stat_(Transaction * msg);
         // statistic
         simtime_t unitOfTime_;
+        simtime_t timeWindow_;
         simsignal_t requestCounterSignal_;
         simsignal_t utilizationCpuSignal_;
     protected:

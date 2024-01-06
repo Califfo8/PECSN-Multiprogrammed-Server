@@ -30,10 +30,14 @@ void Cpu::initialize(){
     unitOfTime_ = par("unitOfTime");
     requestCounterSignal_ = registerSignal("requestCounter");
 
+    timeWindow_ = par("timeWindow");
     utilizationCpuSignal_ = registerSignal("utilizationCpu");
 
     Transaction * updateThroughput = new Transaction("updateThroughput");
     scheduleAt( simTime() + unitOfTime_ , updateThroughput );
+
+    Transaction * updateUtilizationCpu = new Transaction("updateUtilizationCpu");
+    scheduleAt( simTime() + timeWindow_ , updateUtilizationCpu );
 }
 
 void Cpu::elaborate_msg_(Transaction * msg)
@@ -72,9 +76,16 @@ void Cpu::elaborate_throughput_stat_(Transaction * msg){
     scheduleAt( simTime() + unitOfTime_ , msg );
 }
 
+void Cpu::elaborate_utilization_stat_(Transaction * msg){
+    emit( utilizationCpuSignal_ , totalWorked_ / simTime() );
+    scheduleAt( simTime() + timeWindow_ , msg );
+}
+
 void Cpu::elaborate_self_msg_(Transaction * msg){
     if( strcmp(msg->getName() , "updateThroughput" ) == 0 ){
         elaborate_throughput_stat_(msg);
+    }else if( strcmp(msg->getName() , "updateUtilizationCpu") == 0 ){
+        elaborate_utilization_stat_(msg);
     }else{
         elaborate_msg_(msg);
     }
