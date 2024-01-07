@@ -33,8 +33,8 @@ class Cpu : public cSimpleModule {
         bool working_;
         simtime_t startWorking_;
         simtime_t totalWorked_;
-        void elaborate_self_msg_(Transaction * msg);
         void elaborate_external_msg_(Transaction * msg);
+        void elaborate_self_msg_(Transaction * msg);
         void elaborate_msg_(Transaction * msg);
         void elaborate_throughput_stat_(Transaction * msg);
         void elaborate_utilization_stat_(Transaction * msg);

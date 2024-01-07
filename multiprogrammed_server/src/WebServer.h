@@ -33,7 +33,6 @@ class WebServer : public cSimpleModule {
         simtime_t timeWindow_;
 
         void elaborate_self_msg_(Transaction * msg);
-        void elaborate_external_msg_(Transaction * msg);
         void elaborate_utilization_stat_(Transaction * msg);
         void elaborate_msg_(Transaction * msg);
         // statistic

@@ -55,16 +55,19 @@ void Cpu::elaborate_msg_(Transaction * msg)
         msg->setName("CPU_to_QS");
         send(msg,"webServerOUT");
    }
+   //Ho finito l'elaborazione
+   working_ = false;
+   //Raccolgo i dati dell'utilizzazione
+   totalWorked_ += ( simTime() - startWorking_ );
 
-   if ( CPUqueue_->isEmpty() ){
-       working_ = false;
-       
-       // utilization 
-       //emit( utilizationSignal_, simTime()-startWorking_ );
-       totalWorked_ += ( simTime() - startWorking_ );
-
-   }else{
+   //Se la coda è piena inizio subito un altro lavoro
+   if ( !CPUqueue_->isEmpty() ){
+       //statistiche Utilizzazione
+       startWorking_ = simTime();
+       working_ = true;
+       //Prendo un messaggio dalla coda e lo invio a me stesso
        Transaction *msg2 = check_and_cast<Transaction*>( CPUqueue_->pop() );
+       msg->setName("Job_served");
        simtime_t procTime = exponential( 1 / CPUmeanRate_ , 0);
        scheduleAt( simTime() + procTime , msg2 );
    }
@@ -92,14 +95,16 @@ void Cpu::elaborate_self_msg_(Transaction * msg){
 }
 
 void Cpu::elaborate_external_msg_(Transaction * msg){
+    // La CPU sta lavorando, il messaggio si accoda
     if ( working_ ){
             CPUqueue_->insert(msg);
     }else{
-
-        // utilization
+        //La CPU è libera, quindi inizio l'elaborazione
+        //Statistiche per l'utilizzazione
         startWorking_ = simTime();
-
         working_ = true;
+
+        //Mando il self message di fine elaborazione
         msg->setName("Job_served");
         simtime_t procTime = exponential( 1 / CPUmeanRate_ , 0 );
         scheduleAt( simTime() + procTime , msg );

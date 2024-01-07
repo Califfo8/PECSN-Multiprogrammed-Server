@@ -22,7 +22,7 @@ simple HardDisk
 {
     parameters:
         double rateProcessing = default(1);
-        int timeWindow = default(10);
+        int timeWindow @unit(s)= default(10s);
         // Statistic
         @signal[utilizationHd](type=double);
         @statistic[utilizationHdStat](source="utilizationHd";record=mean,vector);

@@ -26,7 +26,7 @@ void WebServer::initialize(){
     timeWindow_ = par("timeWindow");
 
     utilizationWsSignal_ = registerSignal("utilizationWs");
-    Transaction * updateUtilizationWs = new Transaction("updateUtilizationCpu");
+    Transaction * updateUtilizationWs = new Transaction("updateUtilizationWs");
     scheduleAt( simTime() + timeWindow_ , updateUtilizationWs );
 }
 
@@ -36,44 +36,43 @@ void WebServer::elaborate_utilization_stat_(Transaction * msg){
 }
 
 void WebServer::elaborate_msg_(Transaction * msg){
-    msg->setName("QS_to_CPU");
-    send(msg,"out");
-    if(qs_queue_->isEmpty()){
-        working_ = false;
-        totalWorked_ += ( simTime() - startWorking_ );
-    }
-    else {
-        Transaction *self = check_and_cast <Transaction*> (qs_queue_->pop());
-        scheduleAt(simTime()+ exponential( 1 / qs_rate_ , 0 ), self);
-        working_ = true; // useless?
-    }
+    //Se non sto elaborando alcun messaggio, quindi lo elaboro
+        if(!working_)
+        {
+            msg->setName("Finish elaboration");
+            simtime_t procTime = exponential( 1 / qs_rate_ , 0 );
+            scheduleAt(simTime() + procTime, msg);
+            working_ = true;
+            startWorking_ = simTime();
+        }else{
+         //Altrimenti ho già un elaborazione in corso, e il messaggio si accoda
+            qs_queue_->insert(msg);
+        }
 }
 
 void WebServer::elaborate_self_msg_(Transaction * msg){
     if( strcmp(msg->getName() , "updateUtilizationWs") == 0 ){
         elaborate_utilization_stat_(msg);
-    }else{
+        return;
+    }
+        //Invio il messaggio di risposta
+    msg->setName("QS_to_CPU");
+    send(msg,"out");
+    working_ = false;
+    totalWorked_ += ( simTime() - startWorking_ );
+    //Se la coda è piena prendo un altro messaggio e riparto
+    if(!qs_queue_->isEmpty())
+    {
+        msg = check_and_cast<Transaction*>( qs_queue_->pop() );
         elaborate_msg_(msg);
-    }
-}
-
-void WebServer::elaborate_external_msg_(Transaction * msg){
-    if( !working_ ){
-        startWorking_ = simTime();
-        working_ = true;
-        // msg->setName("Job_served");
-        // simtime_t procTime --> sostituire sotto se vogliamo
-        scheduleAt(simTime() + exponential( 1 / qs_rate_ , 0 ) , msg );
-    }else{
-        qs_queue_->insert(msg);
-    }
+     }
 }
 
 void WebServer::handleMessage(cMessage * msg){
    if (msg->isSelfMessage() ){
         elaborate_self_msg_(check_and_cast<Transaction*>(msg));
     }else{
-        elaborate_external_msg_(check_and_cast<Transaction*>(msg));
+        elaborate_msg_(check_and_cast<Transaction*>(msg));
     }
 }
 
