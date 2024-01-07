@@ -23,6 +23,8 @@ void WebServer::initialize(){
     working_ = false;
     qs_rate_ = par("web_server_rate");
 
+    timeWindow_ = par("timeWindow");
+
     utilizationWsSignal_ = registerSignal("utilizationWs");
     Transaction * updateUtilizationWs = new Transaction("updateUtilizationCpu");
     scheduleAt( simTime() + timeWindow_ , updateUtilizationWs );
