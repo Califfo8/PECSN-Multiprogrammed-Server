@@ -21,6 +21,7 @@ void HardDisk::initialize(){
     rate_ = par("rateProcessing");
     timeWindow_ = par("timeWindow");
     working_ = false;
+    totalWorked_ = 0;
     // add signals if needed
     utilizationHdSignal_ = registerSignal("utilizationHd");
     // add code for managing a queue
