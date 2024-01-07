@@ -1,0 +1,52 @@
+file 301386 1704640527                                          
+version 3
+run SimulationTime-36-20240107-16:15:21-18684
+attr configname SimulationTime
+attr datetime 20240107-16:15:21
+attr datetimef 20240107-161521
+attr experiment SimulationTime
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network System
+attr processid 18684
+attr repetition 36
+attr replication #36
+attr resultdir results
+attr runnumber 36
+attr seedset 36
+config **.cpu.rate 1000
+config **.hd.rateProcessing 250
+config **.webServer.web_server_rate 100
+config **.p1 0.35
+config **.p2 0.40
+config network System
+config num-rngs 4
+config **.cpu.rng-0 0
+config **.cpu.rng-1 1
+config **.hd.rng-0 2
+config **.webServer.rng-0 3
+config repeat 500
+config seed-set 36
+config sim-time-limit 10000s
+config **.client.numClients 40
+
+vector 0 System.server.cpu requestCounterStat:vector ETV
+attr recordingmode vector
+attr source requestCounter
+vector 1 System.server.hd utilizationHdStat:vector ETV
+attr recordingmode vector
+attr source utilizationHd
+vector 2 System.server.cpu utilizationCpuStat:vector ETV
+attr recordingmode vector
+attr source utilizationCpu
+vector 3 System.webServer utilizationWsStat:vector ETV
+attr recordingmode vector
+attr source utilizationWs
+0	1275 200950 2208 14580050 1 10000 10000 65 249 1396746 200147916
+1	202225 33041 15470 14580051 10 10000 1001 0.63029664991548 0.66251230950847 639.14393495768 408.10065681789
+2	235266 33046 15471 14580051 10 10000 1001 0.39553232232991 0.4201874244024 398.78803814193 158.87533770623
+3	268312 33072 15472 14580051 10 10000 1001 0.9981914688691 0.99999956180451 1000.9888436652 1000.977692536
+
