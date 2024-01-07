@@ -30,6 +30,7 @@ void Cpu::initialize(){
     unitOfTime_ = par("unitOfTime");
     requestCounterSignal_ = registerSignal("requestCounter");
 
+    totalWorked_ = 0;
     timeWindow_ = par("timeWindow");
     utilizationCpuSignal_ = registerSignal("utilizationCpu");
 

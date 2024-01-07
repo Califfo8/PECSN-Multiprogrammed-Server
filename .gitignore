@@ -9,7 +9,5 @@ Factorial-Analysis/.idea
 Factorial-Analysis/__pycache__
 multiprogrammed_server/.settings/
 multiprogrammed_server/out/
-multiprogrammed_server/Makefile
-multiprogrammed_server/src/Makefile
 multiprogrammed_server/simulations/.cmdenv-log
 multiprogrammed_server/simulations/.qtenvrc
