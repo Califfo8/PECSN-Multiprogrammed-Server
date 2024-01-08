@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <analysis version="2">
     <inputs>
-        <input pattern="results/*.vec"/>
-        <input pattern="results/*.sca"/>
+        <input pattern="resultsSimulationTime/*.vec"/>
+        <input pattern="resultsSimulationTime/*.sca"/>
     </inputs>
     <charts>
-        <chart icon="icons/full/obj/linechart.png" id="689938607" name="utilizationCpuStat:vector, etc." template="linechart_native" type="LINE">
+        <chart icon="icons/full/obj/linechart.png" id="1735516725" name="utilizationCpuStat:vector, etc." template="linechart_native" type="LINE">
             <script><![CDATA[import math
 from omnetpp.scave import results, chart, utils
 

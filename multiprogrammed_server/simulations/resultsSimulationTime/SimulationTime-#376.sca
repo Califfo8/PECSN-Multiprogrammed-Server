@@ -1,8 +1,8 @@
 version 3
-run SimulationTime-376-20240107-16:19:39-12356
+run SimulationTime-376-20240108-13:23:53-12532
 attr configname SimulationTime
-attr datetime 20240107-16:19:39
-attr datetimef 20240107-161939
+attr datetime 20240108-13:23:53
+attr datetimef 20240108-132353
 attr experiment SimulationTime
 attr inifile omnetpp.ini
 attr iterationvars ""
@@ -10,7 +10,7 @@ attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network System
-attr processid 12356
+attr processid 12532
 attr repetition 376
 attr replication #376
 attr resultdir results
@@ -41,7 +41,7 @@ par System.server.hd typename "\"multiprogrammed_server.HardDisk\""
 par System.server.hd rateProcessing 250
 par System.server.hd timeWindow 10s
 attr unit s
-scalar System.server.hd utilizationHdStat:mean 0.63948911597154
+scalar System.server.hd utilizationHdStat:mean 0.63949087898796
 attr recordingmode mean
 attr source utilizationHd
 par System.server.cpu typename "\"multiprogrammed_server.Cpu\""
@@ -52,7 +52,7 @@ par System.server.cpu unitOfTime 1s
 attr unit s
 par System.server.cpu timeWindow 10s
 attr unit s
-scalar System.server.cpu utilizationCpuStat:mean 0.40017458643347
+scalar System.server.cpu utilizationCpuStat:mean 0.40017482892309
 attr recordingmode mean
 attr source utilizationCpu
 scalar System.server.cpu requestCounterStat:mean 140.0669
@@ -63,7 +63,7 @@ par System.webServer typename "\"multiprogrammed_server.WebServer\""
 par System.webServer web_server_rate 100
 par System.webServer timeWindow 10s
 attr unit s
-scalar System.webServer utilizationWsStat:mean 0.99997478656736
+scalar System.webServer utilizationWsStat:mean 0.99997987331585
 attr recordingmode mean
 attr source utilizationWs
 par System typename "\"multiprogrammed_server.simulations.System\""
