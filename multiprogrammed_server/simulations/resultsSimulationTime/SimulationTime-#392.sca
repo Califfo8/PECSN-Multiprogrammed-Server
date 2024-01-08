@@ -1,0 +1,70 @@
+version 3
+run SimulationTime-392-20240107-16:19:51-18916
+attr configname SimulationTime
+attr datetime 20240107-16:19:51
+attr datetimef 20240107-161951
+attr experiment SimulationTime
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network System
+attr processid 18916
+attr repetition 392
+attr replication #392
+attr resultdir results
+attr runnumber 392
+attr seedset 392
+config **.cpu.rate 1000
+config **.hd.rateProcessing 250
+config **.webServer.web_server_rate 100
+config **.p1 0.35
+config **.p2 0.40
+config network System
+config num-rngs 4
+config **.cpu.rng-0 0
+config **.cpu.rng-1 1
+config **.hd.rng-0 2
+config **.webServer.rng-0 3
+config repeat 500
+config seed-set 392
+config sim-time-limit 10000s
+config **.client.numClients 40
+
+par System.client typename "\"multiprogrammed_server.Client\""
+par System.client numClients 40
+scalar System.client responseTimeStat:mean 0.28592445374605
+attr recordingmode mean
+attr source responseTime
+par System.server.hd typename "\"multiprogrammed_server.HardDisk\""
+par System.server.hd rateProcessing 250
+par System.server.hd timeWindow 10s
+attr unit s
+scalar System.server.hd utilizationHdStat:mean 0.63981733765468
+attr recordingmode mean
+attr source utilizationHd
+par System.server.cpu typename "\"multiprogrammed_server.Cpu\""
+par System.server.cpu p1 0.35
+par System.server.cpu p2 0.4
+par System.server.cpu rate 1000
+par System.server.cpu unitOfTime 1s
+attr unit s
+par System.server.cpu timeWindow 10s
+attr unit s
+scalar System.server.cpu utilizationCpuStat:mean 0.39974299957336
+attr recordingmode mean
+attr source utilizationCpu
+scalar System.server.cpu requestCounterStat:mean 139.8894
+attr recordingmode mean
+attr source requestCounter
+par System.server typename "\"multiprogrammed_server.Server\""
+par System.webServer typename "\"multiprogrammed_server.WebServer\""
+par System.webServer web_server_rate 100
+par System.webServer timeWindow 10s
+attr unit s
+scalar System.webServer utilizationWsStat:mean 0.99998702616791
+attr recordingmode mean
+attr source utilizationWs
+par System typename "\"multiprogrammed_server.simulations.System\""
+
