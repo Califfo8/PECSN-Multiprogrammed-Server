@@ -81,6 +81,10 @@ void Cpu::elaborate_throughput_stat_(Transaction * msg){
 }
 
 void Cpu::elaborate_utilization_stat_(Transaction * msg){
+    if ( working_ ){
+        totalWorked_ += ( simTime() - startWorking_ );
+        startWorking_ = simTime();
+    }
     emit( utilizationCpuSignal_ , totalWorked_ / simTime() );
     scheduleAt( simTime() + timeWindow_ , msg );
 }

@@ -31,6 +31,10 @@ void WebServer::initialize(){
 }
 
 void WebServer::elaborate_utilization_stat_(Transaction * msg){
+    if ( working_ ){
+        totalWorked_ += ( simTime() - startWorking_ );
+        startWorking_ = simTime();
+    }
     emit( utilizationWsSignal_ , totalWorked_ / simTime() );
     scheduleAt( simTime() + timeWindow_ , msg );
 }

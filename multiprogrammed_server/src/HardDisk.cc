@@ -50,6 +50,10 @@ void HardDisk::elaborate_msg_(Transaction * msg)
 void HardDisk::elaborate_self_msg_(Transaction * msg)
 {
     if( strcmp(msg->getName() , "updateUtilizationHd") == 0 ){
+        if ( working_ ){
+            totalWorked_ += ( simTime() - startWorking_ );
+            startWorking_ = simTime();
+        }
         emit(utilizationHdSignal_ , totalWorked_ / simTime() );
         scheduleAt( simTime() + timeWindow_ , msg);
         return;
