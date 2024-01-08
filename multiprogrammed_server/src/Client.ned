@@ -26,7 +26,7 @@ simple Client
     	// o si usano N client separati ( da come parlato sabato sera la prima soluzione)
     	// nel caso i messaggi devono comprendere che client �?
 		@signal[responseTime](type=double);
-        @statistic[responseTimeStat](source="responseTime";record=mean);
+        @statistic[responseTimeStat](source="responseTime";record=mean,vector);
     gates: 
         input in;
         output out;
