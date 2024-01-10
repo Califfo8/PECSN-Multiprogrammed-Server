@@ -8,7 +8,7 @@ import math as m
 class FactorialAnalysis:
 
     def __init__(self, factor_names, data_name):
-        percorso = "Data/" + data_name
+        percorso = "Data_FA/" + data_name
         self.raw_data = pd.DataFrame(pd.read_excel(percorso))
         # Privati
         self._sign_matrix = None
@@ -71,7 +71,7 @@ class FactorialAnalysis:
         self.factors = pd.DataFrame(values, columns=["Low", "High"], index=self.factor_names)
 
         # Esporto inexcel
-        self.factors.to_excel("Result/Factors.xlsx")
+        self.factors.to_excel("Result_FA/Factors.xlsx")
 
     def _create_basic_matrix(self):
         # Inizializzo le variabili
@@ -177,7 +177,7 @@ class FactorialAnalysis:
         df2 = pd.DataFrame(self.complete_result_matrix, columns=self._column_names[self.complete_sign_matrix.shape[1]:], dtype=float)
         df = pd.concat([df1, df2], ignore_index=False, axis=1)
         self.complete_matrix = df
-        df.to_excel("Result/complete_matrix.xlsx")
+        df.to_excel("Result_FA/complete_matrix.xlsx")
 
     def compute_result_matrix(self, truncate=False):
         self.compute_complete_matrix()
@@ -233,34 +233,69 @@ class FactorialAnalysis:
         result = pd.concat([df_coefficent, df], ignore_index=False, axis=0)
 
         #Esporto tutto in excel
-        result.to_excel("Result/variation.xlsx")
+        result.to_excel("Result_FA/variation.xlsx")
 
         #Creo un recap riassuntivo per evidenziare meglio i risultati
         ordered_result = result.sort_values(result.last_valid_index(), axis=1, ascending=False)
-        ordered_result.to_excel("Result/variation_recap.xlsx")
+        ordered_result.to_excel("Result_FA/variation_recap.xlsx")
 
     def test_Normal_HP(self):
         plt.clf()
         # Trasformo la matrice dei residui in un vettore
         residual = self._mean_error_matrix[:, 1:].flatten()
         residual = np.sort(residual)
-        # Crea il QQ plot con la bisattrice line added to plot
+        # Crea il QQ plot
         fig = sm.qqplot(residual, line='r')
         plt.grid()
-        plt.savefig('Result/Normal_HP_test.png')
+        plt.savefig('Result_FA/Normal_HP_test.png')
+
+        plt.clf()
+        emp_percentiles, dist_percentiles = self.get_q_q_plot(residual, 'pareto')
+        m, b = np.polyfit(dist_percentiles, emp_percentiles, 1)
+        y = np.zeros(len(dist_percentiles))
+        for i in range(len(dist_percentiles)):
+            y[i] =  dist_percentiles[i] * m +b
+
+        plt.plot(dist_percentiles,  y)
+        plt.xlabel('Theoretical percentiles')
+        plt.ylabel('Residual percentiles')
+        plt.title('QQ plot')
+        plt.plot(dist_percentiles, emp_percentiles)
+        # plt.show()
+
+        # Istogramma dei residui
+        plt.clf()
+        width_bucket = 0.035
+        min_n = int(min(residual))
+        max_n = int(max(residual))
+        n_bins = np.arange(min_n, max_n + width_bucket, width_bucket)
+        plt.hist(residual, bins=n_bins)
+        plt.clf()
+
 
     def test_Homoscedasticity_HP(self):
         plt.clf()
         # Creo il vettore dell'asse x ripetendo r volte i corrispettivi valori medi dei residui
-        x= []
+        x = []
+        indici = []
+        i = -1
         for mean in self._mean_error_matrix[:,0]:
+            i = i+1
             for n in range(self._num_repeat):
                 x.append(mean)
+                indici.append(i)
         #Il vettore degli ascisse sarà pari ai residui
         residual = self._mean_error_matrix[:, 1:].flatten()
+        # Metto tutto in un dataframe da esportare
+        residuals2 = residual
+        # res_zero = (residuals2 == 0)
+        # residuals2[res_zero] = x[res_zero]
+        Ordini_grandezza = np.log10(x/abs(residuals2))
+        df = pd.DataFrame([x, residual, Ordini_grandezza, indici], index=['Predicted Response', 'Residuals', 'Orders of Magnitude', 'Indices'])
+        df.to_excel("Result_FA/PreResponse_Residuals.xlsx")
         plt.scatter(x, residual)
         plt.grid()
-        plt.savefig('Result/Homoscedasticity_test.png')
+        plt.savefig('Result_FA/Homoscedasticity_test.png')
 
     def compute_confidence_interval(self, confidenza):
         n = pow(2, self._num_factors) * (self._num_repeat - 1)
@@ -272,16 +307,41 @@ class FactorialAnalysis:
         all_qi = self._somme_coefficenti[1]
         confidence_interval_matrix = []
         for qi in all_qi:
-            confidence_interval_matrix.append([qi, qi - delta, qi + delta])
+            confidence_interval_matrix.append([qi, qi-delta, qi+delta])
 
         row_names = self._column_names[0:self._somme_coefficenti.shape[1]]
         confidence_interval = pd.DataFrame(confidence_interval_matrix, columns=["qi", "min", "max"], index=row_names)
-        confidence_interval.to_excel("Result/confidence_interval.xlsx")
+        confidence_interval.to_excel("Result_FA/confidence_interval.xlsx")
 
     def test_hp_and_confidence(self, confidenza):
         self.test_Normal_HP()
         self.test_Homoscedasticity_HP()
         self.compute_confidence_interval(confidenza)
+
+    def get_q_q_plot(self, latency_values, distribution):
+
+        distribution = getattr(st, distribution)
+        params = distribution.fit(latency_values)
+
+        latency_values.sort()
+
+        arg = params[:-2]
+        loc = params[-2]
+        scale = params[-1]
+
+        x = []
+
+        for i in range(1, len(latency_values)):
+            x.append((i - 0.5) / len(latency_values))
+
+        y = distribution.ppf(x, loc=loc, scale=scale, *arg)
+
+        y = list(y)
+
+        emp_percentiles = latency_values[1:]
+        dist_percentiles = y
+
+        return emp_percentiles, dist_percentiles
 
     def help(self):
         Text = "Questo programma utilizza come input un file di excel avente lo stesso formato delle tabelle di Omnet++, il file deve \n"
