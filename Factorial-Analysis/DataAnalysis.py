@@ -6,7 +6,7 @@ import scipy.stats as st
 import math as m
 
 class DataAnalysis:
-    def __init__(self, factor_names, data_name):
+    def __init__(self, factor_names, data_name, value_name):
         percorso = "Data_DA/" + data_name
         # Privati
         self._raw_data = pd.DataFrame(pd.read_excel(percorso))
@@ -21,6 +21,7 @@ class DataAnalysis:
         self.num_factors = len(factor_names)
         self.num_experiments = self._raw_data.shape[0]//self._num_repliche
         self.scenario_matrix = None
+        self.value_name = value_name
 
     def _strfact_to_vet(self, vet, car='$'):
         vet = vet.replace(car, "")
@@ -76,7 +77,7 @@ class DataAnalysis:
 
         # Racchiudo tutto in un dataframe
         df1 = pd.DataFrame(confi, columns=self.factor_names)
-        df2 = pd.DataFrame(mean_value, columns=['Throughput'])
+        df2 = pd.DataFrame(mean_value, columns=[self.value_name])
         df3 = pd.DataFrame(confidence_interval, columns=['neg_Delta_CI', 'Delta_CI'])
         df = pd.concat([df1, df2, df3], axis=1, join='inner')
         self.scenario_matrix = df
@@ -100,11 +101,11 @@ class DataAnalysis:
         # Creo il grafico con le rette
         # plt.clf()
         for i in range((righe_selezionate.shape[0]//3)):
-            x_y = righe_selezionate[[A_name, 'Throughput']][i*3:(i+1)*3]
+            x_y = righe_selezionate[[A_name, self.value_name]][i*3:(i+1)*3]
             valori_B = righe_selezionate[B_name]
             x_y.sort_values(by=[self.factor_names[A]], inplace=True)
             label = B_name + " = " + str(valori_B[i*3])
-            plt.plot(x_y[A_name], x_y['Throughput'], label=label,)
+            plt.plot(x_y[A_name], x_y[self.value_name], label=label,)
         titolo = A_name + " vs " + B_name
         nome_file = titolo.replace(" ", "_")
         nome_file = nome_file + ".png"
@@ -113,10 +114,31 @@ class DataAnalysis:
         plt.grid()
         plt.legend(loc="upper left")
         plt.xlabel(A_name)
-        plt.ylabel('Throughput')
+        plt.ylabel(self.value_name)
 
         return nome_file
         #plt.savefig('Result_DA/Graphs/' + nome_file + '.png', dpi=300)
+
+    def test_Normal_HP(self):
+        plt.clf()
+        # Trasformo la matrice dei residui in un vettore
+        values = self._raw_data['Value'].values
+        values = values[0:50]
+        values = np.sort(values)
+        # Crea il QQ plot
+        fig = sm.qqplot(values, line='r')
+        plt.grid()
+        plt.savefig('Result_DA/Normal_HP_test.png')
+
+        # Istogramma dei residui
+        plt.clf()
+        width_bucket = 5
+        min_n = int(min(values))
+        max_n = int(max(values))
+        n_bins = np.arange(min_n, max_n + width_bucket, width_bucket)
+        plt.hist(values, bins=n_bins)
+        plt.show()
+        plt.clf()
 
     def full_plot(self):
         fixed_value = ["Low", 'Medium', "High"]

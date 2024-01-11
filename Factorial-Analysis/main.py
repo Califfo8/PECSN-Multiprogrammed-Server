@@ -12,6 +12,7 @@ if __name__ == '__main__':
     #FA = FactorialAnalysis(factor_names1, "Sim3-Repl50.xlsx")
     #FA.compute_result_matrix()
     #FA.test_hp_and_confidence(0.95)
-    DA = DataAnalysis(["μHD", "μWS", "p1", "p2"], "troughput_scenarios.xlsx")
+    DA = DataAnalysis(["μHD", "μWS", "p1", "p2"], "troughput_scenarios.xlsx", 'Throughput')
     DA.create_scenario_matrix()
     DA.full_plot()
+    DA.test_Normal_HP()
