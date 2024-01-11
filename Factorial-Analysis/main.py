@@ -1,6 +1,5 @@
 import pandas as pd
-import numpy as np
-from FactorialAnalysis import FactorialAnalysis
+
 from DataAnalysis import DataAnalysis
 if __name__ == '__main__':
     PATH_FISSO = "D:/Documenti/OneDrive/Universita/LM-Computer Engineering/PECSN/PECSN-Project/Factorial-Analysis"
@@ -12,7 +11,7 @@ if __name__ == '__main__':
     #FA = FactorialAnalysis(factor_names1, "Sim3-Repl50.xlsx")
     #FA.compute_result_matrix()
     #FA.test_hp_and_confidence(0.95)
-    DA = DataAnalysis(["μHD", "μWS", "p1", "p2"], "troughput_scenarios.xlsx", 'Throughput')
+    DA = DataAnalysis(["μHD", "μWS", "p1", "p2"], "utilization_scenario.xlsx", 'Utilization', 3) #throughput
     DA.create_scenario_matrix()
     DA.full_plot()
     DA.test_Normal_HP()
