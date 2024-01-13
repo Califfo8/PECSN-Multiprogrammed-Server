@@ -23,10 +23,11 @@ simple Client
     parameters:
         // this variabile indicates the number of clients that interact 
         // with the system
-    	int numClients = default(1);
+    	int numClients = default(1);     
+        // we didn't use this statistic
         // signal used for extracting the mean response time of the system
-		@signal[responseTime](type=double);
-        @statistic[responseTimeStat](source="responseTime";record=mean,vector);
+		// @signal[responseTime](type=double);
+        // @statistic[responseTimeStat](source="responseTime";record=mean,vector);
     gates: 
         input in;
         output out;

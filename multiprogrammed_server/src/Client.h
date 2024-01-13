@@ -26,8 +26,11 @@ class Client : public cSimpleModule {
         // this variabile indicates the number of clients that interact 
         // with the system
         int numClients_;
+        /*
+            we didn't use this statistic
+        */
         // signal used for extracting the mean response time of the system
-        simsignal_t responseTimeSignal_;
+        // simsignal_t responseTimeSignal_;
     protected:
         virtual void initialize();
         virtual void handleMessage(cMessage *msg);

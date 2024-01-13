@@ -20,8 +20,11 @@ Define_Module(Client);
 void Client::initialize(){
     // initializing the number of clients of the system
     numClients_ = par("numClients");
+    /* 
+        we didn't use this statistic
+    */
     // registering the signal
-    responseTimeSignal_ = registerSignal("responseTime");
+    // responseTimeSignal_ = registerSignal("responseTime");
     // sending numClients_ Transaction to the cpu(inside the server)
     for( int i = 0 ; i < numClients_ ; i++ ){
         Transaction * msg = new Transaction("CLI_to_CPU");
@@ -38,11 +41,14 @@ void Client::initialize(){
 void Client::handleMessage(cMessage * msg){
     // casting to Transaction from cMessage
     Transaction * tempMsg = check_and_cast<Transaction*>(msg);
+    /*
+        we didn't used this statistic
+    */
     // getting the time values of arrival and departure
-    simtime_t arrivalTime = simTime();
-    simtime_t departureTime = tempMsg->getStartTransaction();
+    // simtime_t arrivalTime = simTime();
+    // simtime_t departureTime = tempMsg->getStartTransaction();
     // emitting the difference (response time of this Transaction)
-    emit(responseTimeSignal_, arrivalTime - departureTime );
+    // emit(responseTimeSignal_, arrivalTime - departureTime );
     // deleting the msg
     delete tempMsg;
     // creating a new one
