@@ -34,9 +34,9 @@ class Cpu : public cSimpleModule {
         double CPUmeanRate_;
         // queue for this service center
         cQueue * CPUqueue_;
-        // variable that tells if the server is working or not
+        // tells if the server is working or not
         bool working_;
-        // variables used in the evaluation of utilization
+        // used in the evaluation of utilization
         // time from the beginning of the last job
         simtime_t startWorking_;
         // total time in wich the server was busy

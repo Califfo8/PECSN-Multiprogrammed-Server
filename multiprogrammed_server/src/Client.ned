@@ -21,7 +21,7 @@ package multiprogrammed_server;
 simple Client
 {
     parameters:
-        // this variabile indicates the number of clients that interact 
+        // this indicates the number of clients that interact 
         // with the system
     	int numClients = default(1);     
         // we didn't use this statistic
