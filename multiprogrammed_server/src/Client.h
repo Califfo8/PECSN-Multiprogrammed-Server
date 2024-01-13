@@ -23,7 +23,7 @@ using namespace omnetpp;
 class Client : public cSimpleModule {
     // NOTE: "_" in name stands of properties stands for private, as seen during lectures
     private:
-        // this variabile indicates the number of clients that interact 
+        // this attribute indicates the number of clients that interact 
         // with the system
         int numClients_;
         /*

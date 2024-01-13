@@ -30,7 +30,7 @@ class HardDisk : public cSimpleModule {
         bool working_;
         // queue for the server center
         cQueue* hd_queue_;
-        // variables used for evaluating utilization
+        // used for evaluating utilization
         simtime_t startWorking_;
         simtime_t totalWorked_;
         simtime_t timeWindow_;
