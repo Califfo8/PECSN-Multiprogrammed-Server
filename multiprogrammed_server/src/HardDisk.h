@@ -24,18 +24,21 @@ using namespace omnetpp;
 class HardDisk : public cSimpleModule {
     // NOTE: "_" in name stands of properties stands for private, as seen during lectures
     private:
+        // mean rate of HDD
         double rate_;
+        // tells if the server is working or not
         bool working_;
+        // queue for the server center
         cQueue* hd_queue_;
-
+        // variables used for evaluating utilization
         simtime_t startWorking_;
         simtime_t totalWorked_;
         simtime_t timeWindow_;
-
+        // utility methods
         void elaborate_msg_(Transaction * msg);
         void elaborate_self_msg_(Transaction * msg);
 
-        // statistic
+        // utilization
         simsignal_t utilizationHdSignal_;
 
     protected:

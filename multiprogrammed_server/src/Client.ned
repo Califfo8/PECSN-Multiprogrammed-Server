@@ -21,10 +21,10 @@ package multiprogrammed_server;
 simple Client
 {
     parameters:
+        // this variabile indicates the number of clients that interact 
+        // with the system
     	int numClients = default(1);
-    	// quindi si fa che questo simple Module rappresenta N client
-    	// o si usano N client separati ( da come parlato sabato sera la prima soluzione)
-    	// nel caso i messaggi devono comprendere che client �?
+        // signal used for extracting the mean response time of the system
 		@signal[responseTime](type=double);
         @statistic[responseTimeStat](source="responseTime";record=mean,vector);
     gates: 

@@ -21,9 +21,11 @@ package multiprogrammed_server;
 simple HardDisk
 {
     parameters:
+        // mean rate of HDD
         double rateProcessing = default(1);
+        // time window used in order to evaluate statisti
         int timeWindow @unit(s)= default(10s);
-        // Statistic
+        // utilization
         @signal[utilizationHd](type=double);
         @statistic[utilizationHdStat](source="utilizationHd";record=mean,vector);
     gates:

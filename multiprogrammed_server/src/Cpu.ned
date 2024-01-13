@@ -21,11 +21,13 @@ package multiprogrammed_server;
 simple Cpu
 {
     parameters:
+        // probability of chosing a path 
         double p1 = default(0.3); 
         double p2 = default(0.3);
+        // mean rate of the CPU
         double rate = default(1);
         
-		// aggiungere le statistic
+		// time windows used in order to evaluate statistics
         int unitOfTime @unit(s) = default(1s);
         int timeWindow @unit(s) = default(10s);
         // throughput

@@ -23,7 +23,10 @@ using namespace omnetpp;
 class Client : public cSimpleModule {
     // NOTE: "_" in name stands of properties stands for private, as seen during lectures
     private:
+        // this variabile indicates the number of clients that interact 
+        // with the system
         int numClients_;
+        // signal used for extracting the mean response time of the system
         simsignal_t responseTimeSignal_;
     protected:
         virtual void initialize();

@@ -23,19 +23,22 @@ using namespace omnetpp;
 class WebServer : public cSimpleModule {
     // NOTE: "_" in name stands of properties stands for private, as seen during lectures
     private:
+        // mean rate of WS
         double qs_rate_;
+        // queue for this server center
         cQueue * qs_queue_;
+        // it states if the server is working or not
         bool working_;
 
-        // utilization
+        // used for evaluation of utilization
         simtime_t startWorking_;
         simtime_t totalWorked_;
         simtime_t timeWindow_;
-
+        // utility methods
         void elaborate_self_msg_(Transaction * msg);
         void elaborate_utilization_stat_(Transaction * msg);
         void elaborate_msg_(Transaction * msg);
-        // statistic
+        // utilization
         simsignal_t utilizationWsSignal_;
     protected:
         virtual void initialize();

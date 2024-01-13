@@ -21,8 +21,9 @@ package multiprogrammed_server;
 simple WebServer
 {
     parameters:
-        double web_server_rate = default(1); // stesso discorso fatti in cpu.ned
-        // statistic        int timeWindow @unit(s) = default(10s);
+        // mean rate of Web Server
+        double web_server_rate = default(1);
+        // time window used for utilization        
         int timeWindow @unit(s) = default(10s);
         // utilization
         @signal[utilizationWs](type=double);

@@ -18,13 +18,17 @@
 Define_Module(WebServer);
 
 void WebServer::initialize(){
-
+    // initializing the queue
     qs_queue_  = new cQueue();
+    // the server isn't busy
     working_ = false;
+    // getting the values of parameters
     qs_rate_ = par("web_server_rate");
-
+    // used for utilization
     timeWindow_ = par("timeWindow");
+    // setting to zero the total time worked
     totalWorked_ = 0;
+    // scheduling event related to utilization
     utilizationWsSignal_ = registerSignal("utilizationWs");
     Transaction * updateUtilizationWs = new Transaction("updateUtilizationWs");
     scheduleAt( simTime() + timeWindow_ , updateUtilizationWs );
@@ -32,39 +36,47 @@ void WebServer::initialize(){
 
 void WebServer::elaborate_utilization_stat_(Transaction * msg){
     if ( working_ ){
+        // if the server is working, it gets the time that 
+        // isn't already counted
         totalWorked_ += ( simTime() - startWorking_ );
         startWorking_ = simTime();
     }
+    //emitting the value of total time worked till that moment
     emit( utilizationWsSignal_ , totalWorked_ / simTime() );
+    // scheduling a new self msg for utilization
     scheduleAt( simTime() + timeWindow_ , msg );
 }
 
 void WebServer::elaborate_msg_(Transaction * msg){
-    //Se non sto elaborando alcun messaggio, quindi lo elaboro
-        if(!working_)
-        {
-            msg->setName("Finish elaboration");
-            simtime_t procTime = exponential( 1 / qs_rate_ , 0 );
-            scheduleAt(simTime() + procTime, msg);
-            working_ = true;
-            startWorking_ = simTime();
-        }else{
-         //Altrimenti ho già un elaborazione in corso, e il messaggio si accoda
-            qs_queue_->insert(msg);
-        }
+    // if not working, start working
+    if(!working_)
+    {
+        msg->setName("Finish elaboration");
+        simtime_t procTime = exponential( 1 / qs_rate_ , 0 );
+        scheduleAt(simTime() + procTime, msg);
+        working_ = true;
+        // setting the starting time of elaboration
+        startWorking_ = simTime();
+    }else{
+        // already working, queue insertion
+        qs_queue_->insert(msg);
+    }
 }
 
 void WebServer::elaborate_self_msg_(Transaction * msg){
+    // if it's a self message related to utilization, elaborate the utilization
     if( strcmp(msg->getName() , "updateUtilizationWs") == 0 ){
         elaborate_utilization_stat_(msg);
         return;
     }
-        //Invio il messaggio di risposta
+    // sending reply to CPU
     msg->setName("QS_to_CPU");
     send(msg,"out");
+    // it stops working
     working_ = false;
+    // updating total time worked
     totalWorked_ += ( simTime() - startWorking_ );
-    //Se la coda è piena prendo un altro messaggio e riparto
+    // if queue isn't empty, gets a new msg and start elaborating it
     if(!qs_queue_->isEmpty())
     {
         msg = check_and_cast<Transaction*>( qs_queue_->pop() );
@@ -73,21 +85,23 @@ void WebServer::elaborate_self_msg_(Transaction * msg){
 }
 
 void WebServer::handleMessage(cMessage * msg){
-   if (msg->isSelfMessage() ){
+    // it starts elaborate a self msg
+    if (msg->isSelfMessage() ){
         elaborate_self_msg_(check_and_cast<Transaction*>(msg));
-    }else{
+    }else{ // else, it's an external arrival, starts to elaborate it
         elaborate_msg_(check_and_cast<Transaction*>(msg));
     }
 }
 
 
 void WebServer::finish(){
+    // deleting all msgs in the queue
     while(!qs_queue_->isEmpty()){
         Transaction *cleaning = check_and_cast<Transaction*>(qs_queue_->pop());
         delete cleaning;
     }
     delete qs_queue_;
-
+    // emitting last value for utilization
     emit(utilizationWsSignal_ , totalWorked_ / simTime() );
 }
 
