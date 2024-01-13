@@ -124,7 +124,7 @@ class DataAnalysis:
         self.find_factor_values()
         df.to_excel("Result_DA/scenario_analysis.xlsx")
 
-    def plot_two_factor_graph(self, A, B, fixed_value='Medium'):
+    def plot_two_factor_graph(self, A, B, fixed_value='Medium', auto_color=True):
         A_name = self.factor_names[A]
         B_name = self.factor_names[B]
 
@@ -151,15 +151,20 @@ class DataAnalysis:
             valori_B = righe_selezionate[B_name]
             modulo = x_y['Module'][i*3]
             x_y.sort_values(by=[self.factor_names[A]], inplace=True)
-
+            # Necessari per la colorazione personalizzata
             cont = cont+1
             ind_c = cont // 3
             if cont == 9:
                 cont = -1
-            plt.plot(x_y[A_name], x_y[self.value_name], linestyle=line_style[self.modules[modulo]], color=colori[ind_c])
-            if cont%3==0:
+            # Verifico se voglio la legenda e i colori personalizzati o no
+            if auto_color:
                 label = B_name + " = " + str(valori_B[i * 3])
-                patches.append(mpatches.Patch(color=colori[ind_c], label=label))
+                plt.plot(x_y[A_name], x_y[self.value_name], label=label, linestyle=line_style[self.modules[modulo]])
+            else:
+                plt.plot(x_y[A_name], x_y[self.value_name], linestyle=line_style[self.modules[modulo]], color=colori[ind_c])
+                if cont%3==0:
+                    label = B_name + " = " + str(valori_B[i * 3])
+                    patches.append(mpatches.Patch(color=colori[ind_c], label=label))
 
         titolo = A_name + " vs " + B_name
         nome_file = titolo.replace(" ", "_")
@@ -167,9 +172,13 @@ class DataAnalysis:
         titolo = titolo + ": " + fixed_value
         plt.title(titolo)
         plt.grid()
-        for i in range(len(line_style)):
-            patches.append(Line2D([0], [0], color='black', ls=line_style[i], label=self.modules_names[i]))
-        plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., handles=patches)
+        # Inserisco nella legenda i valori delle linee
+        if auto_color:
+            plt.legend()
+        else:
+            for i in range(len(line_style)):
+                patches.append(Line2D([0], [0], color='black', ls=line_style[i], label=self.modules_names[i]))
+            plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., handles=patches)
         plt.xlabel(A_name)
         plt.ylabel(self.value_name)
 
@@ -195,7 +204,7 @@ class DataAnalysis:
         plt.hist(values, bins=n_bins)
         plt.clf()
     #max_scale_y limita l'asse y da 0 a max_scale. Se max_scale è -1 la scala la sceglie python
-    def full_plot(self, max_scale_y):
+    def full_plot(self, max_scale_y, auto_color = True):
         fixed_value = ["Low", 'Medium', "High"]
         subplot_index = 1
         for i in range(self.num_factors):
@@ -205,7 +214,7 @@ class DataAnalysis:
                     if max_scale_y != -1:
                         plt.ylim(0, max_scale_y)
                     plt.gcf().set_size_inches(20, 6)
-                    nome_file = self.plot_two_factor_graph(i, j, k)
+                    nome_file = self.plot_two_factor_graph(i, j, k, auto_color)
                     subplot_index += 1
                 plt.tight_layout()
 

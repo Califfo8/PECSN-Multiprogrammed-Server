@@ -13,9 +13,9 @@ if __name__ == '__main__':
     #FA.test_hp_and_confidence(0.95)
 
     # Data Analysis
-    #Nota: nei grafici per avere i colori delle linee diverse e la legenda è necessario commentare due riga nella
-    # funzione plot_two_factor_graph. Soltanto quando si calcola il throughput
+    #Nota: nei grafici per avere i colori delle linee diverse e la legenda personalizzata è necessario passare come terzo argomento "False"
+    # alla funzione full_plot. Questo è necessario farlo soltanto per l'utilizzazione
     DA = DataAnalysis(["μHD", "μWS", "p1", "p2"], "utilization_scenario.xlsx", 'Utilization', 3) #throughput
     DA.create_scenario_matrix()
-    DA.full_plot(1) #Max y value throughput = 240  Max y value utilization = 1
+    DA.full_plot(1, False) #Max y value throughput = 240  Max y value utilization = 1
     DA.test_Normal_HP()
