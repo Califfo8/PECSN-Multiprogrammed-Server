@@ -5,9 +5,11 @@
 multiprogrammed_server/.metadata/
 multiprogrammed_server/src/*.exe
 multiprogrammed_server/simulations/results
+multiprogrammed_server/simulations/resultsScenario
 Factorial-Analysis/.idea
 Factorial-Analysis/__pycache__
 multiprogrammed_server/.settings/
 multiprogrammed_server/out/
 multiprogrammed_server/simulations/.cmdenv-log
 multiprogrammed_server/simulations/.qtenvrc
+Documents/PECSN Project Presentation [Califano_Ramacciotti_Suma].pptx
