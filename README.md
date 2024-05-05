@@ -1,4 +1,4 @@
-# Multiprogrammed Server System
+# Multiprogrammed Server System implemented in OMNeT++
 
 A multiprogrammed server provides services to N concurrent clients, handling transactions that involve local CPU processing, access to the local disk, and remote queries to a distant web server. Here's how the system operates:
 
