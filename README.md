@@ -19,3 +19,7 @@ Service at the local CPU, local disk, and remote web server is handled one reque
 
 The system's throughput, defined as the number of completed transactions per unit of time, will be evaluated under varying levels of multiprogramming. At least one scenario will be simulated where the service demands at the three service centers have considerably different means (e.g., one order of magnitude). Scenarios will be calibrated to ensure meaningful results.
 
+# Contributors
+- [@califfo8](https://github.com/Califfo8)
+- [@nicorama06](https://github.com/nicorama06)
+- [@dimerin](https://github.com/Dimerin)
